@@ -1,0 +1,23 @@
+package Data:
+[Graph]
+[Node]
+[Edge]
+
+
+[ImportFactory| +createModule(name : String) : ImportModule]
+[ImportModule| +import(input : String) : Graph]
+
+[ClassDiagramParser]---[ImportModule]
+
+
+[ExportFactory|+createModule() : ExportModule]
+
+# TODO: ExportResultat kann generisch und nicht nur String sein
+[ExportModule|+export(g : Graph) : String]
+
+[CodeGenerator|???]
+
+package Parser:
+[Parser]
+[Parsec]
+
