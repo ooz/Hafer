@@ -33,6 +33,12 @@ edges g = case g of
     MessyGraph elems -> foldr (++) [] $ map (\e -> case e of
                                                     GEdge e -> [e]
                                                     _       -> []) elems 
+
+elements :: Graph v e -> [GraphElem v e]
+elements g = case g of
+    MessyGraph elems -> elems
+    CleanGraph vs es -> map (\v -> GVertex v) vs ++ map (\e -> GEdge e) es 
+
 -- Not needed anymore due to fold/map instead of map/filter 
 -- implementation of above functions
 {-
