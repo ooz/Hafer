@@ -1,4 +1,4 @@
-# Hapher model
+# Hafer model
 
 # Syntax description (brief/informal):
 #   Construct             | Notation
