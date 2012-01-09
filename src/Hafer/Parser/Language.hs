@@ -1,4 +1,4 @@
-module Parser.Language
+module Hafer.Parser.Language
 ( diagramDef
 ) where
 

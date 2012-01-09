@@ -1,10 +1,10 @@
-module Export.Export 
+module Hafer.Export.Export 
 ( exprt
 , ExportType(GraphvizDot)
 ) where
 
-import Data.DiagramGraph
-import qualified Export.ClassDiagram.Dot as CDD
+import Hafer.Data.DiagramGraph
+import qualified Hafer.Export.ClassDiagram.Dot as CDD
 
 data ExportType = GraphvizDot
                 | Foo

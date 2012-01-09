@@ -1,5 +1,5 @@
-module GenericGraph 
-( module GenericGraph -- TODO: proper interface 
+module Hafer.Data.GenericGraph 
+( module Hafer.Data.GenericGraph -- TODO: proper interface 
 ) where
 
 -- Data declarations

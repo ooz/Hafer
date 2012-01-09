@@ -1,5 +1,5 @@
-module Data.ClassDiagram 
-(module Data.ClassDiagram) where
+module Hafer.Data.ClassDiagram 
+(module Hafer.Data.ClassDiagram) where
 -- ( Name
 -- , Type
 -- , Param

@@ -1,8 +1,8 @@
-module Export.ClassDiagram.Dot 
+module Hafer.Export.ClassDiagram.Dot 
 ( export 
 ) where
 
-import Data.DiagramGraph
+import Hafer.Data.DiagramGraph
 
 _GRAPH_START = "digraph G {"
 _GRAPH_END   = "}"

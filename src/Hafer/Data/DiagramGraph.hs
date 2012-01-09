@@ -1,10 +1,10 @@
-module Data.DiagramGraph 
-( module Data.DiagramGraph
-, module Data.ClassDiagram
+module Hafer.Data.DiagramGraph 
+( module Hafer.Data.DiagramGraph
+, module Hafer.Data.ClassDiagram
 ) where
 
 import Data.Char
-import Data.ClassDiagram
+import Hafer.Data.ClassDiagram
 
 data DiagramGraph = DiagramGraph [Node] [Edge]
     deriving (Show)

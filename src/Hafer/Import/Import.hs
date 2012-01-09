@@ -1,10 +1,10 @@
-module Import.Import 
+module Hafer.Import.Import 
 ( imprt
 , ImportType (ClassDiagram)
 ) where
 
-import Data.DiagramGraph
-import qualified Import.ClassDiagram.ClassDiagramParser as CDP
+import Hafer.Data.DiagramGraph
+import qualified Hafer.Import.ClassDiagram.ClassDiagramParser as CDP
 
 data ImportType = ClassDiagram
                  | ERDiagram

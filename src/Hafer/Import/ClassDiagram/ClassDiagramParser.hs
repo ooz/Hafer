@@ -1,13 +1,13 @@
-module Import.ClassDiagram.ClassDiagramParser
-( Import.ClassDiagram.ClassDiagramParser.parse 
+module Hafer.Import.ClassDiagram.ClassDiagramParser
+( Hafer.Import.ClassDiagram.ClassDiagramParser.parse 
 --, classdiagram
 ) where
 
-import Parser.Parser
-import Data.DiagramGraph
+import Hafer.Parser.Parser as P
+import Hafer.Data.DiagramGraph
 
 parse :: String -> DiagramGraph
-parse input = Parser.Parser.parse classdiagram input
+parse input = P.parse classdiagram input
 
 testClasses = testClass1 ++ " " ++ testClass2 ++ "     " ++ testClass3
 testClass1 = "[Foo| -bar : t; baz:s;bob |+bla();~blub(i : int, j:int) : Bob]"

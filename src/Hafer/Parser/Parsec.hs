@@ -1,5 +1,5 @@
-module Parser.Parsec 
-( Parser, Parser.Parsec.parse
+module Hafer.Parser.Parsec 
+( Parser, Hafer.Parser.Parsec.parse
 , next, reject, eof, option
 , satisfy, expect, expects
 , many, many1, (<|>)
@@ -20,7 +20,7 @@ import Text.Parsec
 import qualified Text.Parsec.Token as P
 import Text.Parsec.Prim
 
-import Parser.Language (diagramDef)
+import Hafer.Parser.Language (diagramDef)
 
 type Parser t = Parsec [t] ()
 

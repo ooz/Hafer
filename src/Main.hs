@@ -8,9 +8,9 @@ import Data.Char
 import Data.Data
 import Data.Maybe
 
-import Data.DiagramGraph
-import Import.Import 
-import Export.Export
+import Hafer.Data.DiagramGraph
+import Hafer.Import.Import 
+import Hafer.Export.Export
 
 main :: IO ()
 main = do [inFile] <- getArgs;
