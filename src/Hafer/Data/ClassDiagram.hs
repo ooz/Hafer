@@ -9,33 +9,48 @@ module Hafer.Data.ClassDiagram
 -- , Visibility(NotSpecified,Default,Private,Package,Public)
 -- ) where
 
+import Hafer.Data.GenericGraph
+
+type CDGraph = Graph CDNode CDAssoc
+
+data CDNode = Class Name [Field] [Method]
+            | Interface Name [Method]
+            | Package Name
+    deriving (Show, Eq)
+
+data CDAssoc = Assoc AssocProp
+             | Extend
+             | Aggregation
+             | Composition
+    deriving (Show, Eq)
+
 type Label = String
-type Name = String
-type Type = String
+type Name  = String
 type Param = (Name, Type)
 
 data Field = Field Visibility Name Type
     deriving (Show, Eq)
+
 data Method = Method Visibility Name [Param] Type
     deriving (Show, Eq)
 
-data Visibility = NotSpecified
-                | Default
-                | Private
-                | Package
-                | Public
+data Type = TypeNotSpecified
+          | SimpleType      String
+          | PolymorphicType String Type
     deriving (Show, Eq)
 
-data AssociationProp = LeftEnd  Label Arrow Multiplicity
-                     | RightEnd Label Arrow Multiplicity
-                     | Center Label
+data Visibility = VisNotSpecified
+                | VisDefault
+                | VisPrivate
+                | VisPackage
+                | VisPublic
+    deriving (Show, Eq)
+
+data AssocProp = LeftEnd  Label Multiplicity
+               | RightEnd Label Multiplicity
+               | Center Label
     deriving (Show, Eq)
                      
-data Arrow = None
-           | Direct
-           | Extend
-    deriving (Show, Eq)
-
 data Multiplicity = Custom String
     deriving (Show, Eq)
 

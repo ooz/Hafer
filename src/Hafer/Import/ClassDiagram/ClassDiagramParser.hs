@@ -1,30 +1,36 @@
+{-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
+
 module Hafer.Import.ClassDiagram.ClassDiagramParser
-( Hafer.Import.ClassDiagram.ClassDiagramParser.parse 
+( ImportMethod 
 --, classdiagram
 ) where
 
-import Hafer.Parser.Parser as P
-import Hafer.Data.DiagramGraph
+import Hafer.Import.ImportMethod
 
-parse :: String -> DiagramGraph
-parse input = P.parse classdiagram input
+import Hafer.Parser.Parser as P
+import Hafer.Data.GenericGraph
+import Hafer.Data.ClassDiagram
+
+instance ImportMethod String CDGraph where
+    imprt s = P.parse classdiagram s
 
 testClasses = testClass1 ++ " " ++ testClass2 ++ "     " ++ testClass3
 testClass1 = "[Foo| -bar : t; baz:s;bob |+bla();~blub(i : int, j:int) : Bob]"
 testClass2 = "[Bob |-bar :t; baz :s;foo]"
-testClass3 = "[Baz|+boz() : Foo]"
+testClass3 = "[Baz|+boz() : List<Foo>]"
 testClass4 = "[Importodule|+imprt() : Graph]"
 
-
-classdiagram :: Parser Char DiagramGraph
+classdiagram :: Parser Char CDGraph
 classdiagram = do classes <- many clazz
-                  return $ DiagramGraph classes []
+                  return $ CleanGraph 
+                               (map (\c -> Vertex c []) classes)
+                               []
 
-clazz :: Parser Char Node
+clazz :: Parser Char CDNode
 clazz = do c <- white $ brackets classBody
            return c
 
-classBody :: Parser Char Node
+classBody :: Parser Char CDNode
 classBody = try (do className <- name;
                     white $ expect '|';
                     fields <- sepEndBy1 field semi;
@@ -45,42 +51,51 @@ classBody = try (do className <- name;
 field :: Parser Char Field
 field = do v <- white $ visibility;
            n <- name;
-           t <- typ;
+           t <- optType;
            return $ Field v n t
 
+optType :: Parser Char Type
+optType = do mbType <- optionMaybe (do white $ expect ':';
+                                       t <- typ;
+                                       return t);
+             case mbType of
+                Nothing -> return TypeNotSpecified
+                Just t  -> return t
+
 typ :: Parser Char Type
-typ = do mbType <- optionMaybe (do white $ expect ':';
-                                   t <- name;
-                                   return t);
-         case mbType of
-            Nothing -> return ""
-            Just t  -> return t
+typ = try (do tBase  <- name;
+              expect '<';
+              tParam <- typ;
+              expect '>';
+              return $ PolymorphicType tBase tParam)
+  <|> do t <- name;
+         return $ SimpleType t
 
 visibility :: Parser Char Visibility
-visibility = option NotSpecified $
-             do expect '-';
-                return Private
-         <|> do expect '~';
-                return Package
-         <|> do expect '+';
-                return Public
+visibility = option VisNotSpecified $
+                do expect '-';
+                   return VisPrivate
+            <|> do expect '~';
+                   return VisPackage
+            <|> do expect '+';
+                   return VisPublic
 
 method :: Parser Char Method
 method = do v <- visibility;
             n <- name;
             params <- parens $ sepEndBy param comma;
-            t <- typ;
+            t <- optType;
             return $ Method v n params t
 
 param :: Parser Char Param
 param = do n <- name;
-           t <- typ;
+           t <- optType;
            return (n, t)
 
 
-relation :: Parser Char Edge
-relation = do a <- clazz;
-              expect '-';
-              many $ expect '-';
-              b <- clazz;
-              return $ Association a b []
+-- relation :: Parser Char Edge
+-- relation = do a <- clazz;
+--               expect '-';
+--               many $ expect '-';
+--               b <- clazz;
+--               return $ Association a b []
