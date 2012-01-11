@@ -12,11 +12,17 @@ data Graph v e = CleanGraph [Vertex v] [Edge v e]
 data Vertex v = Vertex v [Vertex v]
     deriving (Show, Eq)
 
-data Edge v e = Edge e (Vertex v) (Vertex v)
+data Edge v e = Edge e Direction (Vertex v) (Vertex v)
     deriving (Show, Eq)
 
 data GraphElem v e = GVertex (Vertex v)
                    | GEdge   (Edge v e)
+    deriving (Show, Eq)
+
+data Direction = None
+               | L2R
+               | R2L
+               | Both
     deriving (Show, Eq)
 
 
