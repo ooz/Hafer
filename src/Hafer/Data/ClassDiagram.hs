@@ -1,5 +1,7 @@
 module Hafer.Data.ClassDiagram 
-(module Hafer.Data.ClassDiagram) where
+( module Hafer.Data.ClassDiagram
+, module Hafer.Data.GenericGraph
+) where
 -- ( Name
 -- , Type
 -- , Param
@@ -36,7 +38,7 @@ data Method = Method Visibility Name [Param] Type
 
 data Type = TypeNotSpecified
           | SimpleType      String
-          | PolymorphicType String Type
+          | PolymorphicType String [Type]
     deriving (Show, Eq)
 
 data Visibility = VisNotSpecified

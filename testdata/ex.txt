@@ -12,3 +12,8 @@
 
 [CodeGenerator]
 
+[Bar]
+[Bar|+foo]
+
+[Foo]^--[Bar]
+

@@ -1,0 +1,84 @@
+[Graph | +elems()   : List<GraphElem<V, E>>
+             ; +vertices(): List<Vertex<V>>
+             ; +edges()   : List<Edge<E>>]
+
+[GraphElem]^-[GVertex]
+[GraphElem]^-[GEdge]
+
+[Vertex  | +get() : T
+            ; +children() : List<Vertex<V>>]
+[Edge | +get()  : E
+            ; +left() : Vertex<V>
+            ; +right(): Vertex<V>]
+
+
+[Graph]^-----[CDGraph]
+[GraphElem]^-[CDElem]
+
+[CDNode]^-[Package | +name():Name]
+[CDNode]
+^---[Interface | +name():Type; +methods():List<Method>]
+    [Interface]
+    ^---[Class | +fields():List<Field>]
+[CDNode]^-[Note]
+
+[CDEdge]^-[Association]
+[CDEdge]^-[Aggregation]
+[CDEdge]^-[Composition]
+[CDEdge]^-[Inheritance]
+
+[Field  | +visibility() : Visibility; +name() : Name; +type(): Type]
+[Field]^--[Method | +param() : List<Param>]
+
+[Visibility]^-[NotSpecified]
+[Visibility]^-[Default]
+[Visibility]^-[Private]
+[Visibility]^-[Package]
+[Visibility]^-[Public]
+
+[Param | +name():Name; +type():Type]
+[String]^-[Name]
+[Type]^-[Simple  | +name() : Name]
+
+
+[ImportModule| +imprt(input : I) : G]
+
+
+[ImportModule]
+^--[ClassDiagramParser | +imprt(input : String) : CDGraph]
+
+
+
+[ParserFascade | +parse(p:Parser<T>, in:String) : T
+                  ; +parsers():Map<String, Parser<T>>]
+[Parser]^--[Parsec]
+
+[LanguageDef]^-[DiagramDef]
+
+
+
+[ExportModule|+exprt(graph : G) : O]
+
+[ExportModule]
+^--[SimpleCodeGenerator]
+[ExportModule]
+^--[ProjektCodeGenerator]
+
+[SimpleCodeGenerator]
+^--[ClassDiagramToDot]
+[ExportModule]
+^--[ProjektCodeGenerator]
+
+
+
+[Metric | +evaluate(graph : G) : M]
+[Metric]^--[GenericMetric]
+
+[GenericMetric]
+^--[MaxDegreeMetric]
+[GenericMetric]
+^--[CycleMetric]
+ 
+
+[Metric]^-[SoftwareDesignMetric]
+[SoftwareDesignMetric]^-[CouplingMetric]

@@ -1,0 +1,78 @@
+digraph G {
+fontname = "Bitstream Vera Sans" fontsize = 8
+node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "record" ]
+edge [ fontname = "Bitstream Vera Sans" fontsize = 8 ]
+_Graph [ label = "{Graph|+ elems() : List\<GraphElem\<V, E\>\>\l+ vertices() : List\<Vertex\<V\>\>\l+ edges() : List\<Edge\<E\>\>\l}" ]
+Vertex [ label = "{Vertex|+ get() : T\l+ children() : List\<Vertex\<V\>\>\l}" ]
+_Edge [ label = "{Edge|+ get() : E\l+ left() : Vertex\<V\>\l+ right() : Vertex\<V\>\l}" ]
+Field [ label = "{Field|+ visibility() : Visibility\l+ name() : Name\l+ type() : Type\l}" ]
+Param [ label = "{Param|+ name() : Name\l+ type() : Type\l}" ]
+ImportModule [ label = "{ImportModule|+ imprt(inputI) : G\l}" ]
+ParserFascade [ label = "{ParserFascade|+ parse(pParser\<T\>, inString) : T\l+ parsers() : Map\<String, Parser\<T\>\>\l}" ]
+ExportModule [ label = "{ExportModule|+ exprt(graphG) : O\l}" ]
+Metric [ label = "{Metric|+ evaluate(graphG) : M\l}" ]
+edge [ arrowhead = "empty" ]
+GVertex -> GraphElem
+edge [ arrowhead = "empty" ]
+GEdge -> GraphElem
+edge [ arrowhead = "empty" ]
+CDGraph -> _Graph
+edge [ arrowhead = "empty" ]
+CDElem -> GraphElem
+edge [ arrowhead = "empty" ]
+Package -> CDNode
+edge [ arrowhead = "empty" ]
+Interface -> CDNode
+edge [ arrowhead = "empty" ]
+Class -> Interface
+edge [ arrowhead = "empty" ]
+Note -> CDNode
+edge [ arrowhead = "empty" ]
+Association -> CDEdge
+edge [ arrowhead = "empty" ]
+Aggregation -> CDEdge
+edge [ arrowhead = "empty" ]
+Composition -> CDEdge
+edge [ arrowhead = "empty" ]
+Inheritance -> CDEdge
+edge [ arrowhead = "empty" ]
+Method -> Field
+edge [ arrowhead = "empty" ]
+NotSpecified -> Visibility
+edge [ arrowhead = "empty" ]
+Default -> Visibility
+edge [ arrowhead = "empty" ]
+Private -> Visibility
+edge [ arrowhead = "empty" ]
+Package -> Visibility
+edge [ arrowhead = "empty" ]
+Public -> Visibility
+edge [ arrowhead = "empty" ]
+Name -> String
+edge [ arrowhead = "empty" ]
+Simple -> Type
+edge [ arrowhead = "empty" ]
+ClassDiagramParser -> ImportModule
+edge [ arrowhead = "empty" ]
+Parsec -> Parser
+edge [ arrowhead = "empty" ]
+DiagramDef -> LanguageDef
+edge [ arrowhead = "empty" ]
+SimpleCodeGenerator -> ExportModule
+edge [ arrowhead = "empty" ]
+ProjektCodeGenerator -> ExportModule
+edge [ arrowhead = "empty" ]
+ClassDiagramToDot -> SimpleCodeGenerator
+edge [ arrowhead = "empty" ]
+ProjektCodeGenerator -> ExportModule
+edge [ arrowhead = "empty" ]
+GenericMetric -> Metric
+edge [ arrowhead = "empty" ]
+MaxDegreeMetric -> GenericMetric
+edge [ arrowhead = "empty" ]
+CycleMetric -> GenericMetric
+edge [ arrowhead = "empty" ]
+SoftwareDesignMetric -> Metric
+edge [ arrowhead = "empty" ]
+CouplingMetric -> SoftwareDesignMetric
+}

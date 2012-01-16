@@ -8,14 +8,14 @@ import Data.Char
 import Data.Data
 import Data.Maybe
 
-import Hafer.Data.DiagramGraph
-import Hafer.Import.Import 
-import Hafer.Export.Export
+import Hafer.Data.ClassDiagram
+import qualified Hafer.Import.ClassDiagram.ClassDiagramParser as I
+import qualified Hafer.Export.ClassDiagram.Dot as E
 
 main :: IO ()
 main = do [inFile] <- getArgs;
           input  <- readFile inFile;
-          putStr $ exprt (imprt input ClassDiagram) GraphvizDot;
+          putStr $ E.exprt ((I.imprt input) :: CDGraph)
 
 -- parse :: String -> Graph
 -- parse s = Node "foobar" 

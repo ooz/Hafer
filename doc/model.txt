@@ -75,12 +75,12 @@ data.erdiagram:
 
 import:
 #[ImportFactory| +createModule(name : String) : ImportModule]
-[ImportModule<I, >| +import(input : I) : Graph<V, E>]
+[ImportModule<I, G>| +imprt(input : I) : G]
 
 
 import.classdiagram:
-[ImportModule<String, CDNode, CDEdge>]
-^--[ClassDiagramParser | +import(in:String) : CDGraph]
+[ImportModule<String, CDGraph>]
+^--[ClassDiagramParser | +imprt(input : String) : CDGraph]
 
 
 
@@ -95,7 +95,7 @@ parser:
 
 export:
 #[ExportFactory|+createModule(name : String) : ExportModule]
-[ExportModule<G, X>|+export(graph : G) : X]
+[ExportModule<G, O>|+exprt(graph : G) : O]
 
 export.codegenerator:
 [ExportModule<G, String>]
@@ -103,7 +103,7 @@ export.codegenerator:
 [ExportModule<G, IOAction>]
 ^--[ProjektCodeGenerator<G>]
 
-export.classdiagramdot
+export.classdiagram
 [SimpleCodeGenerator<CDGraph>]
 ^--[ClassDiagramToDot]
 [ExportModule<G, IOAction>]

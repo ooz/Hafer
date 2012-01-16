@@ -2,6 +2,7 @@
 
 module Hafer.Import.ClassDiagram.ClassDiagramParser
 ( ImportMethod 
+, imprt
 --, classdiagram
 ) where
 
@@ -17,18 +18,22 @@ instance ImportMethod String CDGraph where
 testClasses = testClass1 ++ " " ++ testClass2 ++ "     " ++ testClass3
 testClass1 = "[Foo| -bar : t; baz:s;bob |+bla();~blub(i : int, j:int) : Bob]"
 testClass2 = "[Bob |-bar :t; baz :s;foo]"
-testClass3 = "[Baz|+boz() : List<Foo>]"
+testClass3 = "[Baz|+boz() : List<Foo<K, V>>]"
 testClass4 = "[Importodule|+imprt() : Graph]"
 
 classdiagram :: Parser Char CDGraph
-classdiagram = do classes <- many clazz
-                  return $ CleanGraph 
-                               (map (\c -> Vertex c []) classes)
-                               []
+classdiagram = do comps <- many classDiagramComp 
+                  return $ MessyGraph comps
 
-clazz :: Parser Char CDNode
+classDiagramComp :: Parser Char (GraphElem CDNode CDAssoc)
+classDiagramComp = try (do a <- association;
+                           return $ GEdge a)
+               <|> do c <- clazz;
+                      return $ GVertex c -- TODO: add package
+
+clazz :: Parser Char (Vertex CDNode)
 clazz = do c <- white $ brackets classBody
-           return c
+           return $ Vertex c []
 
 classBody :: Parser Char CDNode
 classBody = try (do className <- name;
@@ -63,11 +68,11 @@ optType = do mbType <- optionMaybe (do white $ expect ':';
                 Just t  -> return t
 
 typ :: Parser Char Type
-typ = try (do tBase  <- name;
-              expect '<';
-              tParam <- typ;
-              expect '>';
-              return $ PolymorphicType tBase tParam)
+typ = try (do tBase   <- name;
+              expect  '<';
+              tParams <- sepEndBy typ comma;
+              expect  '>';
+              return $ PolymorphicType tBase tParams)
   <|> do t <- name;
          return $ SimpleType t
 
@@ -84,7 +89,7 @@ method :: Parser Char Method
 method = do v <- visibility;
             n <- name;
             params <- parens $ sepEndBy param comma;
-            t <- optType;
+            t <- white $ optType;
             return $ Method v n params t
 
 param :: Parser Char Param
@@ -92,6 +97,25 @@ param = do n <- name;
            t <- optType;
            return (n, t)
 
+
+
+-- # Association parsers
+association :: Parser Char (Edge CDNode CDAssoc)
+association = do a            <- clazz;
+                 (as, direct) <- assoc;
+                 b            <- clazz;
+                 return $ Edge as direct a b 
+
+assoc :: Parser Char (CDAssoc, Direction)
+assoc = extend
+
+extend :: Parser Char (CDAssoc, Direction)
+extend = do expect '^';
+            many1 $ expect '-';
+            return $ (Extend, R2L)
+     <|> do many1 $ expect '-';
+            expect '^';
+            return $ (Extend, L2R)
 
 -- relation :: Parser Char Edge
 -- relation = do a <- clazz;

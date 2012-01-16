@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE=testdata/ex
+FILE=testdata/ex2
 TXT_IN=$FILE.txt
 DOT_OUT=$FILE.dot
 IMG_OUT=$FILE.png

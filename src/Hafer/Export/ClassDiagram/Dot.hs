@@ -1,8 +1,14 @@
+{-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
 module Hafer.Export.ClassDiagram.Dot 
-( export 
+( ExportMethod
+, exprt
 ) where
 
-import Hafer.Data.DiagramGraph
+import Hafer.Export.ExportMethod
+import Hafer.Data.ClassDiagram
+
+instance ExportMethod CDGraph String where
+    exprt g = export g
 
 _GRAPH_START = "digraph G {"
 _GRAPH_END   = "}"
@@ -21,20 +27,24 @@ _EDGE_CONFIG = "edge [\
 \ fontsize = 8\
 \ ]"
 
-testClass = Class "Foobar" [Field Private "foo" "int"] [Method Public "bar" [("baz","int")] "void"]
-testGraph = DiagramGraph [testClass] []
+_EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" ]"
 
-export :: DiagramGraph -> String
-export g = case g of
-    DiagramGraph nodes edges -> 
-        _GRAPH_START ++ "\n"
-        ++ _GENERAL_CONFIG ++ "\n"
-        ++ _NODE_CONFIG ++ "\n"
-        ++ _EDGE_CONFIG ++ "\n"
-        ++ (foldr (++) "" (map (\n -> convertNode n ++ "\n") nodes))
-        ++ _GRAPH_END ++ "\n"
+testClass = Class "Foobar" [Field VisPrivate "foo" (SimpleType "int")] [Method VisPublic "bar" [("baz",(SimpleType "int"))] (SimpleType "void")]
+testGraph = CleanGraph [Vertex testClass []] []
 
-testConvertNode = convertNode $ testClass
+testConvertNode = convertVertex $ Vertex testClass []
+
+export :: CDGraph -> String
+export g = let vs = vertices g
+               es = edges g
+           in
+                _GRAPH_START ++ "\n"
+                ++ _GENERAL_CONFIG ++ "\n"
+                ++ _NODE_CONFIG ++ "\n"
+                ++ _EDGE_CONFIG ++ "\n"
+                ++ (foldr (++) "" (map (\v -> convertVertex v ++ "\n") vs))
+                ++ (foldr (++) "" (map (\e -> convertEdge e ++ "\n"  ) es))
+                ++ _GRAPH_END ++ "\n"
 
 reservedWords = ["Graph", "Node", "Edge"]
 
@@ -43,9 +53,9 @@ escapeReserved word = case (elem word reservedWords) of
     True  -> "_" ++ word
     False -> word
 
-convertNode :: Node -> String
-convertNode n = case n of
-    Class name fields methods -> 
+convertVertex :: Vertex CDNode -> String
+convertVertex v = case v of
+    Vertex (Class name fields methods) [] -> 
         (escapeReserved name) ++ " [ label = \"{" 
                               ++ name 
                               ++ (addFields fields) 
@@ -62,7 +72,7 @@ convertFields :: [Field] -> String
 convertFields fields = case fields of
     (Field v name t):fs -> (convertVisibility v) 
                            ++ name 
-                           ++ (convertType t) 
+                           ++ (convertOptType t) 
                            ++ "\\l" 
                            ++ convertFields fs
     []   -> ""
@@ -76,22 +86,33 @@ convertMethods methods = case methods of
     (Method v name params t):ms -> (convertVisibility v)
                                    ++ name 
                                    ++ "(" ++ (convertParams params) ++ ")"
-                                   ++ (convertType t)
+                                   ++ (convertOptType t)
                                    ++ "\\l"
                                    ++ convertMethods ms
     []   -> ""
 
 convertVisibility :: Visibility -> String
 convertVisibility v = case v of
-    Private -> "- "
-    Package -> "~ "
-    Public  -> "+ "
-    _       -> ""
+    VisPrivate -> "- "
+    VisPackage -> "~ "
+    VisPublic  -> "+ "
+    _          -> ""
 
-convertType :: String -> String
+convertOptType :: Type -> String
+convertOptType t = case t of
+    TypeNotSpecified -> ""
+    _ -> " : " ++ convertType t
+
+convertType :: Type -> String
 convertType t = case t of
-    "" -> ""
-    _  -> " : " ++ t
+    SimpleType name         -> name
+    PolymorphicType name ts -> name ++ "\\<" ++ convertTypes ts ++ "\\>"
+    _ -> ""
+
+convertTypes :: [Type] -> String
+convertTypes ts = case (map (\a -> convertType a) ts) of
+    t:ts' -> foldl (\a b -> a ++ ", " ++ b) t ts'
+    []    -> ""
 
 convertParams :: [Param] -> String
 convertParams l = case l of
@@ -100,3 +121,30 @@ convertParams l = case l of
 
 convertParam :: Param -> String
 convertParam (n,t) = n ++ convertType t
+
+
+
+-- # Edge conversion
+
+convertEdge :: Edge CDNode CDAssoc -> String
+convertEdge e = case e of
+    Edge assoc dir l r -> (convertEdgeType assoc) ++ "\n"
+                          ++ (convertArrow dir l r)
+
+convertEdgeType :: CDAssoc -> String
+convertEdgeType a = case a of
+    Extend -> _EDGE_EXTEND_CONFIG
+
+convertArrow :: Direction -> Vertex CDNode -> Vertex CDNode -> String
+convertArrow d l r = let l' = escapeReserved (extractNodeName l)
+                         r' = escapeReserved (extractNodeName r)
+                     in case d of
+                        L2R -> l' ++ " -> " ++ r'
+                        R2L -> r' ++ " -> " ++ l'
+                        _   -> l' ++ " -> " ++ r'
+
+extractNodeName :: Vertex CDNode -> String
+extractNodeName (Vertex n _) = case n of
+    Class name _ _   -> name
+    Interface name _ -> name
+    Package name     -> name
