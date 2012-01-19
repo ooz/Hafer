@@ -23,7 +23,7 @@ testClass4 = "[Importodule|+imprt() : Graph]"
 
 classdiagram :: Parser Char CDGraph
 classdiagram = do comps <- many classDiagramComp 
-                  return $ MessyGraph comps
+                  return $ ElemSetGraph comps
 
 classDiagramComp :: Parser Char (GraphElem CDNode CDAssoc)
 classDiagramComp = try (do a <- association;

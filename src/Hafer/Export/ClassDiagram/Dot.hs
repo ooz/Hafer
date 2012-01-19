@@ -30,7 +30,7 @@ _EDGE_CONFIG = "edge [\
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" ]"
 
 testClass = Class "Foobar" [Field VisPrivate "foo" (SimpleType "int")] [Method VisPublic "bar" [("baz",(SimpleType "int"))] (SimpleType "void")]
-testGraph = CleanGraph [Vertex testClass []] []
+testGraph = MathGraph [Vertex testClass []] []
 
 testConvertNode = convertVertex $ Vertex testClass []
 
