@@ -109,7 +109,7 @@ assoc :: Parser Char (CDAssoc, Direction)
 assoc = try (extend)
     <|> try (plainAssoc)
     <|> try (composition)
-    <|> try (aggregation)
+    <|> aggregation
 
 extend :: Parser Char (CDAssoc, Direction)
 extend = do expect '^';
