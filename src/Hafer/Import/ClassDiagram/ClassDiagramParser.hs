@@ -15,11 +15,10 @@ import Hafer.Data.ClassDiagram
 instance ImportMethod String CDGraph where
     imprt s = P.parse classdiagram s
 
-testClasses = testClass1 ++ " " ++ testClass2 ++ "     " ++ testClass3
+__test__   = testClass1 ++ " " ++ testClass2 ++ " " ++ testAssoc 
 testClass1 = "[Foo| -bar : t; baz:s;bob |+bla();~blub(i : int, j:int) : Bob]"
-testClass2 = "[Bob |-bar :t; baz :s;foo]"
-testClass3 = "[Baz|+boz() : List<Foo<K, V>>]"
-testClass4 = "[Importodule|+imprt() : Graph]"
+testClass2 = "[Importodule |+imprt() : Graph<Foo<K,V>, B>]"
+testAssoc  = "[Foo]---[Bar]"
 
 classdiagram :: Parser Char CDGraph
 classdiagram = do comps <- many classDiagramComp 
@@ -107,7 +106,10 @@ association = do a            <- clazz;
                  return $ Edge as direct a b 
 
 assoc :: Parser Char (CDAssoc, Direction)
-assoc = extend
+assoc = try (extend)
+    <|> try (plainAssoc)
+    <|> try (composition)
+    <|> try (aggregation)
 
 extend :: Parser Char (CDAssoc, Direction)
 extend = do expect '^';
@@ -117,9 +119,36 @@ extend = do expect '^';
             expect '^';
             return $ (Extend, L2R)
 
--- relation :: Parser Char Edge
--- relation = do a <- clazz;
---               expect '-';
---               many $ expect '-';
---               b <- clazz;
---               return $ Association a b []
+plainAssoc :: Parser Char (CDAssoc, Direction)
+plainAssoc = try (do expect '<';
+                     many1 $ expect '-';
+                     return $ (Association [], R2L))
+         <|> try (do expect '<';
+                     many1 $ expect '-';
+                     expect '>';
+                     return $ (Association [], Both))
+         <|> try (do many1 $ expect '-';
+                     expect '>';
+                     return $ (Association [], L2R))
+         <|>      do many1 $ expect '-';
+                             return $ (Association [], None)
+
+composition :: Parser Char (CDAssoc, Direction)
+composition = do expects "++";
+                 many1 $ expect '-';
+                 expect '>';
+                 return $ (Composition [], L2R)
+          <|> do expect '<';
+                 many1 $ expect '-';
+                 expects "++";
+                 return $ (Composition [], R2L)
+
+aggregation :: Parser Char (CDAssoc, Direction)
+aggregation = do choice $ [expects "<>", expects "+"];
+                 many1 $ expect '-';
+                 expect '>';
+                 return $ (Composition [], L2R)
+          <|> do expect '<';
+                 many1 $ expect '-';
+                 choice $ [expects "<>", expects "+"];
+                 return $ (Composition [], R2L)

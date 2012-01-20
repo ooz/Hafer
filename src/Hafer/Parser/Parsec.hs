@@ -1,6 +1,7 @@
 module Hafer.Parser.Parsec 
 ( Parser, Hafer.Parser.Parsec.parse
-, next, reject, eof, option
+, next, reject, eof 
+, choice, option
 , satisfy, expect, expects
 , many, many1, (<|>)
 , parens, braces, brackets

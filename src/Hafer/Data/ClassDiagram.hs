@@ -20,10 +20,10 @@ data CDNode = Class Name [Field] [Method]
             | Package Name
     deriving (Show, Eq)
 
-data CDAssoc = Assoc AssocProp
+data CDAssoc = Association [AssocProp]
              | Extend
-             | Aggregation
-             | Composition
+             | Aggregation [AssocProp]
+             | Composition [AssocProp]
     deriving (Show, Eq)
 
 type Label = String
