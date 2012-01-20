@@ -14,6 +14,7 @@ _GRAPH_START = "digraph G {"
 _GRAPH_END   = "}"
 
 _GENERAL_CONFIG = "fontname = \"Bitstream Vera Sans\"\
+\ rankdir = \"RL\"\
 \ fontsize = 8"
 
 _NODE_CONFIG = "node [\

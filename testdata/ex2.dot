@@ -1,5 +1,5 @@
 digraph G {
-fontname = "Bitstream Vera Sans" fontsize = 8
+fontname = "Bitstream Vera Sans" rankdir = "RL" fontsize = 8
 node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "record" ]
 edge [ fontname = "Bitstream Vera Sans" fontsize = 8 ]
 _Graph [ label = "{Graph|+ elems() : List\<GraphElem\<V, E\>\>\l+ vertices() : List\<Vertex\<V\>\>\l+ edges() : List\<Edge\<E\>\>\l}" ]
