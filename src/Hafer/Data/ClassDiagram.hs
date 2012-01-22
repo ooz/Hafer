@@ -26,13 +26,13 @@ data CDAssoc = Association [AssocProp]
              | Composition [AssocProp]
     deriving (Show, Eq)
 
-data Field = Field Visibility Name Type
+data Field = Field Visibility String Type
     deriving (Show, Eq)
 
-data Method = Method Visibility Name [Param] Type
+data Method = Method Visibility String [Param] Type
     deriving (Show, Eq)
 
-type Param = (Name, Type)
+type Param = (String, Type)
 
 -- Name and Type too similar
 data Name = Name String

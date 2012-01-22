@@ -3,7 +3,6 @@
 module Hafer.Import.ClassDiagram.ClassDiagramParser
 ( ImportMethod 
 , imprt
---, classdiagram
 ) where
 
 import Hafer.Import.ImportMethod
@@ -35,21 +34,21 @@ clazz = do c <- white $ brackets classBody
            return $ Vertex c []
 
 classBody :: Parser Char CDNode
-classBody = try (do className <- name;
+classBody = try (do className <- componentName;
                     white $ expect '|';
                     fields <- sepEndBy1 field semi;
                     white $ expect '|';
                     methods <- sepEndBy1 method semi;
                     return $ Class className fields methods)
-        <|> try (do className <- name;
+        <|> try (do className <- componentName;
                     white $ expect '|';
                     methods <- sepEndBy1 method semi;
                     return $ Class className [] methods)
-        <|> try (do className <- name;
+        <|> try (do className <- componentName;
                     white $ expect '|';
                     fields <- sepEndBy1 field semi;
                     return $ Class className fields [])
-        <|> do className <- name
+        <|> do className <- componentName;
                return $ Class className [] []
 
 field :: Parser Char Field
@@ -58,12 +57,26 @@ field = do v <- white $ visibility;
            t <- optType;
            return $ Field v n t
 
+-- | Parses a class diagram component name, e.g. name of a class or package.
+componentName :: Parser Char Name
+componentName = try (do quali <- name;
+                        expect '.';
+                        namePart <- componentName;
+                        return $ QualifiedName quali namePart)
+            <|> try (do n <- name;
+                        expect '<';
+                        nParams <- sepEndBy name comma;
+                        white $ expect '>';
+                        return $ ParametrizedName n nParams)
+            <|> do n <- name;
+                   return $ Name n
+
 optType :: Parser Char Type
 optType = do mbType <- optionMaybe (do white $ expect ':';
                                        t <- typ;
                                        return t);
              case mbType of
-                Nothing -> return TypeNotSpecified
+                Nothing -> return Dynamic
                 Just t  -> return t
 
 typ :: Parser Char Type
@@ -73,10 +86,10 @@ typ = try (do tBase   <- name;
               expect  '>';
               return $ PolymorphicType tBase tParams)
   <|> do t <- name;
-         return $ SimpleType t
+         return $ Type t
 
 visibility :: Parser Char Visibility
-visibility = option VisNotSpecified $
+visibility = option VisDefault $
                 do expect '-';
                    return VisPrivate
             <|> do expect '~';

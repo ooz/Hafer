@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
+
 module Hafer.Export.ClassDiagram.Dot 
 ( ExportMethod
 , exprt
@@ -30,7 +31,7 @@ _EDGE_CONFIG = "edge [\
 
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" ]"
 
-testClass = Class "Foobar" [Field VisPrivate "foo" (SimpleType "int")] [Method VisPublic "bar" [("baz",(SimpleType "int"))] (SimpleType "void")]
+testClass = Class (Name "Foobar") [Field VisPrivate "foo" (Type "int")] [Method VisPublic "bar" [("baz",(Type "int"))] (Type "void")]
 testGraph = MathGraph [Vertex testClass []] []
 
 testConvertNode = convertVertex $ Vertex testClass []
@@ -49,6 +50,19 @@ export g = let vs = vertices g
 
 reservedWords = ["Graph", "Node", "Edge"]
 
+escape :: String -> String
+escape name = escapeReserved $ map escapeChar name 
+
+escapeChar :: Char -> Char
+escapeChar c = case c of
+    ' ' -> '_'
+    '<' -> '_'
+    '>' -> '_'
+    ',' -> '_'
+    '.' -> '_'
+    '\\'-> '_'
+    _   -> c
+
 escapeReserved :: String -> String
 escapeReserved word = case (elem word reservedWords) of
     True  -> "_" ++ word
@@ -57,13 +71,25 @@ escapeReserved word = case (elem word reservedWords) of
 convertVertex :: Vertex CDNode -> String
 convertVertex v = case v of
     Vertex (Class name fields methods) [] -> 
-        (escapeReserved name) ++ " [ label = \"{" 
-                              ++ name 
-                              ++ (addFields fields) 
-                              ++ (addMethods methods) 
-                              ++ "}\" ]"  
+        let name' = convertName name
+        in 
+            (escape name') ++ " [ label = \"{" 
+                           ++ name'
+                           ++ (addFields fields) 
+                           ++ (addMethods methods) 
+                           ++ "}\" ]"  
     _ -> ""
 
+
+convertName :: Name -> String
+convertName n = case n of
+    Name nn                -> nn
+    QualifiedName qs n'    -> qs ++ "." ++ convertName n'
+    ParametrizedName nn [] -> nn 
+    ParametrizedName nn ps -> nn ++ "\\<" ++ (reduceSep ps ", ")  ++ "\\>"
+
+reduceSep :: [String] -> String -> String
+reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
 
 addFields :: [Field] -> String
 addFields l = case l of 
@@ -101,23 +127,23 @@ convertVisibility v = case v of
 
 convertOptType :: Type -> String
 convertOptType t = case t of
-    TypeNotSpecified -> ""
+    Dynamic -> ""
     _ -> " : " ++ convertType t
 
 convertType :: Type -> String
 convertType t = case t of
-    SimpleType name         -> name
+    Type name               -> name
     PolymorphicType name ts -> name ++ "\\<" ++ convertTypes ts ++ "\\>"
     _ -> ""
 
 convertTypes :: [Type] -> String
 convertTypes ts = case (map (\a -> convertType a) ts) of
-    t:ts' -> foldl (\a b -> a ++ ", " ++ b) t ts'
+    t:ts' -> reduceSep (t:ts') ", "
     []    -> ""
 
 convertParams :: [Param] -> String
-convertParams l = case l of
-    p:ps -> foldl (\a b -> a ++ ", " ++ (convertParam b)) (convertParam p) ps
+convertParams l = case (map (\a -> convertParam a) l) of
+    p:ps -> reduceSep (p:ps) ", "
     []   -> ""
 
 convertParam :: Param -> String
@@ -137,8 +163,8 @@ convertEdgeType a = case a of
     Extend -> _EDGE_EXTEND_CONFIG
 
 convertArrow :: Direction -> Vertex CDNode -> Vertex CDNode -> String
-convertArrow d l r = let l' = escapeReserved (extractNodeName l)
-                         r' = escapeReserved (extractNodeName r)
+convertArrow d l r = let l' = escape (extractNodeName l)
+                         r' = escape (extractNodeName r)
                      in case d of
                         L2R -> l' ++ " -> " ++ r'
                         R2L -> r' ++ " -> " ++ l'
@@ -146,6 +172,6 @@ convertArrow d l r = let l' = escapeReserved (extractNodeName l)
 
 extractNodeName :: Vertex CDNode -> String
 extractNodeName (Vertex n _) = case n of
-    Class name _ _   -> name
-    Interface name _ -> name
-    Package name     -> name
+    Class name _ _   -> convertName name
+    Interface name _ -> convertName name
+    Package name     -> convertName name
