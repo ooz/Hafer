@@ -26,28 +26,33 @@ data CDAssoc = Association [AssocProp]
              | Composition [AssocProp]
     deriving (Show, Eq)
 
-type Label = String
-type Name  = String
-type Param = (Name, Type)
-
 data Field = Field Visibility Name Type
     deriving (Show, Eq)
 
 data Method = Method Visibility Name [Param] Type
     deriving (Show, Eq)
 
-data Type = TypeNotSpecified
-          | SimpleType      String
+type Param = (Name, Type)
+
+-- Name and Type too similar
+data Name = Name String
+          | QualifiedName String Name
+          | ParametrizedName String [String] 
+    deriving (Show, Eq)
+
+data Type = Dynamic
+          | Type            String
+          | QualifiedType   String Type
           | PolymorphicType String [Type]
     deriving (Show, Eq)
 
-data Visibility = VisNotSpecified
-                | VisDefault
+data Visibility = VisDefault
                 | VisPrivate
                 | VisPackage
                 | VisPublic
     deriving (Show, Eq)
 
+type Label = String
 data AssocProp = LeftEnd  Label Multiplicity
                | RightEnd Label Multiplicity
                | Center Label
