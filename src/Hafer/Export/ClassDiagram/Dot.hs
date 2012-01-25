@@ -15,7 +15,7 @@ _GRAPH_START = "digraph G {"
 _GRAPH_END   = "}"
 
 _GENERAL_CONFIG = "fontname = \"Bitstream Vera Sans\"\
-\ rankdir = \"RL\"\
+\ rankdir = \"TD\"\
 \ fontsize = 8"
 
 _NODE_CONFIG = "node [\
@@ -70,6 +70,14 @@ escapeReserved word = case (elem word reservedWords) of
 
 convertVertex :: Vertex CDNode -> String
 convertVertex v = case v of
+    Vertex (Package name) children ->
+        let name' = convertName name
+        in 
+            "subgraph cluster" ++ (escape name') 
+                ++ " {" 
+                ++ " label = \"" ++ name' ++ "\"\n"
+                ++ (foldr (++) "" (map (\v -> convertVertex v ++ "\n") children)) 
+                ++  "}"
     Vertex (Class name fields methods) [] -> 
         let name' = convertName name
         in 
