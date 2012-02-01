@@ -5,6 +5,8 @@ module Hafer.Import.ClassDiagram.ClassDiagramParser
 , imprt
 ) where
 
+import Data.List (partition)
+
 import Hafer.Import.ImportMethod
 
 import Hafer.Parser.Parser as P
@@ -21,13 +23,32 @@ testAssoc  = "[Foo]---[Bar]"
 
 classdiagram :: Parser Char CDGraph
 classdiagram = do comps <- many classDiagramComp 
-                  return $ ElemSetGraph comps
+                  return $ ElemSetGraph $ concat comps
 
-classDiagramComp :: Parser Char (GraphElem CDNode CDAssoc)
-classDiagramComp = try (do a <- association;
-                           return $ GEdge a)
+classDiagramComp :: Parser Char [GraphElem CDNode CDAssoc]
+classDiagramComp = try (do comps <- association;
+                           return $ comps)
+               <|> do (p, edges) <- package;
+                      return $ (GVertex p):(map (\e -> GEdge e) edges)
                <|> do c <- clazz;
-                      return $ GVertex c -- TODO: add package
+                      return $ [GVertex c]
+
+package :: Parser Char (Vertex CDNode, [Edge CDNode CDAssoc])
+package = do pname <- componentName;
+             white $ expect '{';
+             comps <- many classDiagramComp
+             white $ expect '}';
+             let (nodes, edges) = partition (\a -> case a of
+                                                GVertex _ -> True
+                                                GEdge _   -> False)
+                                            $ concat comps
+                 vertices = map (\a -> case a of
+                                        GVertex a' -> a')
+                                nodes
+                 edges'   = map (\a -> case a of
+                                        GEdge a' -> a')
+                                edges
+             return (Vertex (Package pname) vertices, edges')
 
 clazz :: Parser Char (Vertex CDNode)
 clazz = do c <- white $ brackets classBody
@@ -112,11 +133,13 @@ param = do n <- name;
 
 
 -- # Association parsers
-association :: Parser Char (Edge CDNode CDAssoc)
+association :: Parser Char [GraphElem CDNode CDAssoc]
 association = do a            <- clazz;
                  (as, direct) <- assoc;
                  b            <- clazz;
-                 return $ Edge as direct a b 
+                 return $ [ GVertex a
+                          , GVertex b
+                          , GEdge $ Edge as direct a b ]
 
 assoc :: Parser Char (CDAssoc, Direction)
 assoc = try (extend)
