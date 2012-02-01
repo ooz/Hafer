@@ -40,6 +40,33 @@ data Name = Name String
           | ParametrizedName String [String] 
     deriving (Show, Eq)
 
+-- | Finds the longest common prefix of two names.
+commonName :: Name -> Name -> Maybe Name
+commonName a b = case a of
+    Name an -> case b of
+        Name bn               -> if (an == bn)
+                                 then Just $ Name an
+                                 else Nothing
+        ParametrizedName bn _ -> if (an == bn)
+                                 then Just $ Name an
+                                 else Nothing
+        QualifiedName _ _     -> commonName b a
+        _                     -> Nothing
+    QualifiedName qa a' -> case b of
+        Name bn -> if (qa == bn)
+                   then Just $ Name qa
+                   else Nothing
+        ParametrizedName bn _ -> if (qa == bn)
+                                 then Just $ Name qa
+                                 else Nothing
+        QualifiedName qb b' -> if (qa == qb) 
+                               then case (commonName a' b') of
+                                Nothing -> Just $ Name qa
+                                Just n  -> Just $ QualifiedName qa n
+                               else Nothing
+    _ -> commonName b a
+                   
+
 data Type = Dynamic
           | Type            String
           | QualifiedType   String Type
