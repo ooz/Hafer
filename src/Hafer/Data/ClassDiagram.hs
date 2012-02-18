@@ -24,6 +24,7 @@ data CDAssoc = Association [AssocProp]
              | Extend
              | Aggregation [AssocProp]
              | Composition [AssocProp]
+             | PkgContain
     deriving (Show, Eq)
 
 data Field = Field Visibility String Type
