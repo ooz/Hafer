@@ -7,9 +7,7 @@ data Graph v e = MathGraph    [Vertex v] [Edge v e]
                | ElemSetGraph [GraphElem v e]
     deriving (Show, Eq)
 
--- Simple vertex: empty list
--- Vertex container/"Subgraph": non-empty list
-data Vertex v = Vertex v [Vertex v]
+data Vertex v = Vertex v 
     deriving (Show, Eq)
 
 data Edge v e = Edge e Direction (Vertex v) (Vertex v)

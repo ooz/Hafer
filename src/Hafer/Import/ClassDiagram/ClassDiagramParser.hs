@@ -28,12 +28,12 @@ classdiagram = do comps <- many classDiagramComp
 classDiagramComp :: Parser Char [GraphElem CDNode CDAssoc]
 classDiagramComp = try (do comps <- association;
                            return $ comps)
-               <|> do (p, edges) <- package;
-                      return $ (GVertex p):(map (\e -> GEdge e) edges)
+               <|> do (vertices, edges) <- package;
+                      return $ (map (\v -> GVertex v) vertices) ++ (map (\e -> GEdge e) edges)
                <|> do c <- clazz;
                       return $ [GVertex c]
 
-package :: Parser Char (Vertex CDNode, [Edge CDNode CDAssoc])
+package :: Parser Char ([Vertex CDNode], [Edge CDNode CDAssoc])
 package = do pname <- componentName;
              white $ expect '{';
              comps <- many classDiagramComp
@@ -48,11 +48,16 @@ package = do pname <- componentName;
                  edges'   = map (\a -> case a of
                                         GEdge a' -> a')
                                 edges
-             return (Vertex (Package pname) vertices, edges')
+                 package  = Vertex (Package pname)
+                 pkgEdges = map (\v -> Edge PkgContain L2R v package)
+                                vertices
+             return ([package] ++ vertices
+                    , edges'   ++ pkgEdges
+                    )
 
 clazz :: Parser Char (Vertex CDNode)
 clazz = do c <- white $ brackets classBody
-           return $ Vertex c []
+           return $ Vertex c 
 
 classBody :: Parser Char CDNode
 classBody = try (do className <- componentName;
