@@ -52,7 +52,6 @@ commonName a b = case a of
                                  then Just $ Name an
                                  else Nothing
         QualifiedName _ _     -> commonName b a
-        _                     -> Nothing
     QualifiedName qa a' -> case b of
         Name bn -> if (qa == bn)
                    then Just $ Name qa
