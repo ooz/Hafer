@@ -11,6 +11,12 @@ import Hafer.Data.ClassDiagram
 instance ExportMethod CDGraph String where
     exprt g = export g
 
+
+
+-- ##########################################################################
+-- # Boilerplate
+-- ##########################################################################
+
 _GRAPH_START = "digraph G {"
 _GRAPH_END   = "}"
 
@@ -31,21 +37,35 @@ _EDGE_CONFIG = "edge [\
 
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" ]"
 
-testClass = Class (Name "Foobar") [Field VisPrivate "foo" (Type "int")] [Method VisPublic "bar" [("baz",(Type "int"))] (Type "void")]
-testGraph = MathGraph [Vertex testClass []] []
 
-testConvertNode = convertVertex $ Vertex testClass []
+
+-- ##########################################################################
+-- # Test
+-- ##########################################################################
+
+testClass = Class (Name "Foobar") [Field VisPrivate "foo" (Type "int")] [Method VisPublic "bar" [("baz",(Type "int"))] (Type "void")]
+testGraph = MathGraph [Vertex testClass] []
+
+testConvertNode = convertVertex testGraph $ Vertex testClass 
+
+-- ##########################################################################
+-- # Export
+-- ##########################################################################
 
 export :: CDGraph -> String
 export g = let vs = vertices g
                es = edges g
+               nonPkgEdges = filter (\e -> case e of
+                                            Edge PkgContain _ _ _ -> False
+                                            _ -> True
+                                    ) es
            in
                 _GRAPH_START ++ "\n"
                 ++ _GENERAL_CONFIG ++ "\n"
                 ++ _NODE_CONFIG ++ "\n"
                 ++ _EDGE_CONFIG ++ "\n"
-                ++ (foldr (++) "" (map (\v -> convertVertex v ++ "\n") vs))
-                ++ (foldr (++) "" (map (\e -> convertEdge e ++ "\n"  ) es))
+                ++ (foldr (++) "" (map (\v -> convertVertex g v ++ "\n") vs))
+                ++ (foldr (++) "" (map (\e -> convertEdge e ++ "\n"  ) nonPkgEdges))
                 ++ _GRAPH_END ++ "\n"
 
 reservedWords = ["Graph", "Node", "Edge"]
@@ -68,17 +88,36 @@ escapeReserved word = case (elem word reservedWords) of
     True  -> "_" ++ word
     False -> word
 
-convertVertex :: Vertex CDNode -> String
-convertVertex v = case v of
-    Vertex (Package name) children ->
-        let name' = convertName name
-        in 
-            "subgraph cluster" ++ (escape name') 
-                ++ " {" 
-                ++ " label = \"" ++ name' ++ "\"\n"
-                ++ (foldr (++) "" (map (\v -> convertVertex v ++ "\n") children)) 
+
+
+-- ##########################################################################
+-- # Vertex conversion
+-- ##########################################################################
+
+convertVertex :: CDGraph -> Vertex CDNode -> String
+convertVertex g v = case v of
+    Vertex (Package name) ->
+        let nameStr = convertName name
+            adjas   = adjacents g v
+            -- TODO: build package hierachy!
+            children = filter (\a -> case a of
+                                        Vertex (Class n fs ms) -> True
+                                        _ -> False
+                              ) adjas
+        in  "subgraph cluster" ++ (escape nameStr)
+                ++ " {"
+                ++ " label = \"" ++ nameStr ++ "\"\n"
+                ++ (foldr (++) "" (map (\v -> convertVertex g v ++ "\n") children)) 
                 ++  "}"
-    Vertex (Class name fields methods) [] -> 
+--     Vertex (Package name) children ->
+--         let name' = convertName name
+--         in 
+--             "subgraph cluster" ++ (escape name') 
+--                 ++ " {" 
+--                 ++ " label = \"" ++ name' ++ "\"\n"
+--                 ++ (foldr (++) "" (map (\v -> convertVertex v ++ "\n") children)) 
+--                 ++  "}"
+    Vertex (Class name fields methods) -> 
         let name' = convertName name
         in 
             (escape name') ++ " [ label = \"{" 
@@ -159,7 +198,9 @@ convertParam (n,t) = n ++ convertType t
 
 
 
+-- ##########################################################################
 -- # Edge conversion
+-- ##########################################################################
 
 convertEdge :: Edge CDNode CDAssoc -> String
 convertEdge e = case e of
@@ -179,7 +220,7 @@ convertArrow d l r = let l' = escape (extractNodeName l)
                         _   -> l' ++ " -> " ++ r'
 
 extractNodeName :: Vertex CDNode -> String
-extractNodeName (Vertex n _) = case n of
+extractNodeName (Vertex n) = case n of
     Class name _ _   -> convertName name
     Interface name _ -> convertName name
     Package name     -> convertName name
