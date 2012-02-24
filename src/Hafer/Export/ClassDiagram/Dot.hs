@@ -5,6 +5,14 @@ module Hafer.Export.ClassDiagram.Dot
 , exprt
 ) where
 
+import Hafer.Export.Common.Dot ( cGRAPH_START
+                               , cGRAPH_END
+                               , cGENERAL_CONFIG
+                               , reservedWords
+                               , escape
+                               , escapeChar
+                               , escapeReserved
+                               )
 import Hafer.Export.ExportMethod
 import Hafer.Data.ClassDiagram
 
@@ -14,15 +22,8 @@ instance ExportMethod CDGraph String where
 
 
 -- ##########################################################################
--- # Boilerplate
+-- # Additional boilerplate
 -- ##########################################################################
-
-_GRAPH_START = "digraph G {"
-_GRAPH_END   = "}"
-
-_GENERAL_CONFIG = "fontname = \"Bitstream Vera Sans\"\
-\ rankdir = \"TD\"\
-\ fontsize = 8"
 
 _NODE_CONFIG = "node [\
 \ fontname = \"Bitstream Vera Sans\"\
@@ -60,33 +61,13 @@ export g = let vs = vertices g
                                             _ -> True
                                     ) es
            in
-                _GRAPH_START ++ "\n"
-                ++ _GENERAL_CONFIG ++ "\n"
+                cGRAPH_START ++ "\n"
+                ++ cGENERAL_CONFIG ++ "\n"
                 ++ _NODE_CONFIG ++ "\n"
                 ++ _EDGE_CONFIG ++ "\n"
                 ++ (foldr (++) "" (map (\v -> convertVertex g v ++ "\n") vs))
                 ++ (foldr (++) "" (map (\e -> convertEdge e ++ "\n"  ) nonPkgEdges))
-                ++ _GRAPH_END ++ "\n"
-
-reservedWords = ["Graph", "Node", "Edge"]
-
-escape :: String -> String
-escape name = escapeReserved $ map escapeChar name 
-
-escapeChar :: Char -> Char
-escapeChar c = case c of
-    ' ' -> '_'
-    '<' -> '_'
-    '>' -> '_'
-    ',' -> '_'
-    '.' -> '_'
-    '\\'-> '_'
-    _   -> c
-
-escapeReserved :: String -> String
-escapeReserved word = case (elem word reservedWords) of
-    True  -> "_" ++ word
-    False -> word
+                ++ cGRAPH_END ++ "\n"
 
 
 
@@ -130,10 +111,9 @@ convertVertex g v = case v of
 
 convertName :: Name -> String
 convertName n = case n of
-    Name nn                -> nn
-    QualifiedName qs n'    -> qs ++ "." ++ convertName n'
     ParametrizedName nn [] -> nn 
     ParametrizedName nn ps -> nn ++ "\\<" ++ (reduceSep ps ", ")  ++ "\\>"
+    _                      -> format n
 
 reduceSep :: [String] -> String -> String
 reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
