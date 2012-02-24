@@ -20,12 +20,26 @@ data CDNode = Class Name [Field] [Method]
             | Package Name
     deriving (Show, Eq)
 
+instance Format CDNode where
+    format n = case n of
+        Class name _ _   -> format name
+        Interface name _ -> format name
+        Package name     -> format name
+
 data CDAssoc = Association [AssocProp]
              | Extend
              | Aggregation [AssocProp]
              | Composition [AssocProp]
              | PkgContain
     deriving (Show, Eq)
+
+instance Format CDAssoc where
+    format e = case e of
+        Association _ -> "Association"
+        Extend        -> "Extend"
+        Aggregation _ -> "Aggregation"
+        Composition _ -> "Composition"
+        PkgContain    -> "Package"
 
 data Field = Field Visibility String Type
     deriving (Show, Eq)
@@ -40,6 +54,12 @@ data Name = Name String
           | QualifiedName String Name
           | ParametrizedName String [String] 
     deriving (Show, Eq)
+
+instance Format Name where
+    format n = case n of
+        Name ns -> ns
+        QualifiedName qs n' -> qs ++ "." ++ format n'
+        ParametrizedName ns ps -> ns -- TODO: maybe include parameters in formatted string
 
 -- | Finds the longest common prefix of two names.
 commonName :: Name -> Name -> Maybe Name

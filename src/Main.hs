@@ -10,12 +10,14 @@ import Data.Maybe
 
 import Hafer.Data.ClassDiagram
 import qualified Hafer.Import.ClassDiagram.ClassDiagramParser as I
-import qualified Hafer.Export.ClassDiagram.Dot as E
+
+--import qualified Hafer.Export.ClassDiagram.Dot as CD2Dot
+import qualified Hafer.Export.Graph.Dot as G2Dot
 
 main :: IO ()
 main = do [inFile] <- getArgs;
           input  <- readFile inFile;
-          putStr $ E.exprt ((I.imprt input) :: CDGraph)
+          putStr $ G2Dot.exprt ((I.imprt input) :: CDGraph)
 
 -- parse :: String -> Graph
 -- parse s = Node "foobar" 

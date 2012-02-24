@@ -24,6 +24,14 @@ data Direction = None
     deriving (Show, Eq)
 
 
+-- | Typeclass for converting vertex/edge types to labels that can be
+--   shown in a generic graph rendering.
+--   Reduced version of Text.Show typeclass 
+--   (which should rather be used for debugging purposes)
+class Format a where
+    format :: a -> String
+
+
 -- Graph properties
 vertices :: Graph v e -> [Vertex v]
 vertices g = case g of
