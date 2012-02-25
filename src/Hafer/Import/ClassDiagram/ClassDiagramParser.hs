@@ -88,12 +88,12 @@ componentName :: Parser Char Name
 componentName = try (do quali <- name;
                         expect '.';
                         namePart <- componentName;
-                        return $ QualifiedName quali namePart)
+                        return $ Qualified quali namePart)
             <|> try (do n <- name;
                         expect '<';
                         nParams <- sepEndBy name comma;
                         white $ expect '>';
-                        return $ ParametrizedName n nParams)
+                        return $ Parametrized n nParams)
             <|> do n <- name;
                    return $ Name n
 
