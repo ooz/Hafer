@@ -26,18 +26,22 @@ classdiagram = do comps <- many $ classDiagramComp $ Name ""
                   return $ ElemSetGraph $ concat comps
 
 classDiagramComp :: Name -> Parser Char [GraphElem CDNode CDAssoc]
-classDiagramComp quali = try (do comps <- association quali;
+classDiagramComp quali = try (do comps <- nonPackageComp quali;
                                  return $ comps)
                   <|> do (vertices, edges) <- package;
                          return $ (map (\v -> GVertex v) vertices) ++ (map (\e -> GEdge e) edges)
-                  <|> do c <- clazz quali;
-                         return $ [GVertex c]
+
+nonPackageComp :: Name -> Parser Char [GraphElem CDNode CDAssoc]
+nonPackageComp quali = try (do comps <- association quali;
+                               return $ comps)
+                <|> do c <- clazz quali;
+                       return $ [GVertex c]
+
 
 package :: Parser Char ([Vertex CDNode], [Edge CDNode CDAssoc])
 package  = do pname <- componentName $ Name "";
-              white $ expect '{';
-              comps <- many $ classDiagramComp pname
-              white $ expect '}';
+              white $ expect ':';
+              comps <- many $ nonPackageComp pname
               let (nodes, edges) = partition (\a -> case a of
                                                  GVertex _ -> True
                                                  GEdge _   -> False)
