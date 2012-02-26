@@ -26,6 +26,7 @@ instance Format CDNode where
         Class name _ _   -> format name
         Interface name _ -> format name
         Package name     -> format name
+        Reference name   -> format name
 
 data CDAssoc = Association [AssocProp]
              | Extend
