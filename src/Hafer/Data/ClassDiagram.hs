@@ -103,6 +103,37 @@ join a b = case a of
     Parametrized a' _ -> Qualified a' b
     Qualified qn a'   -> Qualified qn $ join a' b
 
+isPrefix :: Name -> Name -> Bool
+isPrefix q n = case (commonName q n) of
+    Nothing -> False
+    Just q' -> if (q' == q)
+               then True
+               else False
+
+-- | Removes the qualification (prefix) q from the name n
+--   If q is not a prefix of n, n is returned.
+--   If q and n are equal an empty name (Name "") is returned.
+--   In case q and n are qualified names of the same length,
+--   n without the qualification will be returned.
+--
+--   Examples:
+--    unjoin bob     foo.Bar = foo.Bar
+--    unjoin foo     foo.Bar = Bar
+--    unjoin foo.Baz foo.Bar = foo.Bar
+--    unjoin foo.Bar foo.Bar = ""
+unjoin :: Name -> Name -> Name
+unjoin q n = case (isPrefix q n) of
+    False -> n
+    True  -> case q of
+              Name qs            -> case n of 
+                                    Name _           -> Name ""
+                                    Parametrized _ _ -> Name ""
+                                    Qualified ns n'  -> n'
+              Parametrized qs _  -> unjoin (Name qs) n
+              Qualified    qs q' -> case n of
+                                    Qualified ns n' -> unjoin q' n'
+                                    _               -> n
+
 data Type = Dynamic
           | Type            String
           | QualifiedType   String Type
