@@ -54,8 +54,8 @@ type Param = (String, Type)
 data Name = Name String
           | Parametrized String [String] 
           | Qualified String Name
---                    ^---------- Name that is qualified
---                           ^--- Qualification/namespace
+--                    ^---------- Qualification/namespace
+--                           ^--- Name that is qualified
     deriving (Show, Eq)
 
 instance Format Name where
@@ -88,7 +88,17 @@ commonName a b = case a of
                             Just n  -> Just $ Qualified qa n
                            else Nothing
     _ -> commonName b a
-                   
+
+-- | Joins two names where the first name is the qualification for the 
+--   second name.
+--   (Name "") or (Parametrized "" _) 
+--   can be used to indicate no qualification                
+join :: Name -> Name -> Name
+join a b = case a of
+    Name ""           -> b
+    Name a'           -> Qualified a' b
+    Parametrized a' _ -> Qualified a' b
+    Qualified qn a'   -> Qualified qn $ join a' b
 
 data Type = Dynamic
           | Type            String
