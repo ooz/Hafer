@@ -111,9 +111,9 @@ convertVertex g v = case v of
 
 convertName :: Name -> String
 convertName n = case n of
-    ParametrizedName nn [] -> nn 
-    ParametrizedName nn ps -> nn ++ "\\<" ++ (reduceSep ps ", ")  ++ "\\>"
-    _                      -> format n
+    Parametrized nn [] -> nn 
+    Parametrized nn ps -> nn ++ "\\<" ++ (reduceSep ps ", ")  ++ "\\>"
+    _                  -> format n
 
 reduceSep :: [String] -> String -> String
 reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
