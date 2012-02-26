@@ -143,12 +143,15 @@ param = do n <- name;
 
 -- # Association parsers
 association :: Name -> Parser Char [GraphElem CDNode CDAssoc]
-association quali = do a            <- clazz quali;
+association quali = do a@(Vertex (Class aName _ _)) <- clazz quali;
                        (as, direct) <- assoc;
-                       b            <- clazz quali;
+                       b@(Vertex (Class bName _ _)) <- clazz quali;
                        return $ [ GVertex a
                                 , GVertex b
-                                , GEdge $ Edge as direct a b ]
+                                , GEdge $ Edge as 
+                                               direct 
+                                               (Vertex $ Reference aName) 
+                                               (Vertex $ Reference bName) ]
 
 assoc :: Parser Char (CDAssoc, Direction)
 assoc = try (extend)
