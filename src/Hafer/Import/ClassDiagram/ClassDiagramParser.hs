@@ -21,61 +21,61 @@ testClass1 = "[Foo| -bar : t; baz:s;bob |+bla();~blub(i : int, j:int) : Bob]"
 testClass2 = "[Importodule |+imprt() : Graph<Foo<K,V>, B>]"
 testAssoc  = "[Foo]---[Bar]"
 
-classdiagram :: Parser Char CDGraph
-classdiagram = do comps <- many classDiagramComp 
+classdiagram :: Parser Char CDGraph             -- v--- no qualification
+classdiagram = do comps <- many $ classDiagramComp $ Name ""
                   return $ ElemSetGraph $ concat comps
 
-classDiagramComp :: Parser Char [GraphElem CDNode CDAssoc]
-classDiagramComp = try (do comps <- association;
-                           return $ comps)
-               <|> do (vertices, edges) <- package;
-                      return $ (map (\v -> GVertex v) vertices) ++ (map (\e -> GEdge e) edges)
-               <|> do c <- clazz;
-                      return $ [GVertex c]
+classDiagramComp :: Name -> Parser Char [GraphElem CDNode CDAssoc]
+classDiagramComp quali = try (do comps <- association quali;
+                                 return $ comps)
+                  <|> do (vertices, edges) <- package;
+                         return $ (map (\v -> GVertex v) vertices) ++ (map (\e -> GEdge e) edges)
+                  <|> do c <- clazz quali;
+                         return $ [GVertex c]
 
 package :: Parser Char ([Vertex CDNode], [Edge CDNode CDAssoc])
-package = do pname <- componentName;
-             white $ expect '{';
-             comps <- many classDiagramComp
-             white $ expect '}';
-             let (nodes, edges) = partition (\a -> case a of
-                                                GVertex _ -> True
-                                                GEdge _   -> False)
-                                            $ concat comps
-                 vertices = map (\a -> case a of
-                                        GVertex a' -> a')
-                                nodes
-                 edges'   = map (\a -> case a of
-                                        GEdge a' -> a')
-                                edges
-                 package  = Vertex (Package pname)
-                 pkgEdges = map (\v -> Edge PkgContain L2R v package)
-                                vertices
-             return ([package] ++ vertices
-                    , edges'   ++ pkgEdges
-                    )
+package  = do pname <- componentName $ Name "";
+              white $ expect '{';
+              comps <- many $ classDiagramComp pname
+              white $ expect '}';
+              let (nodes, edges) = partition (\a -> case a of
+                                                 GVertex _ -> True
+                                                 GEdge _   -> False)
+                                             $ concat comps
+                  vertices = map (\a -> case a of
+                                         GVertex a' -> a')
+                                 nodes
+                  edges'   = map (\a -> case a of
+                                         GEdge a' -> a')
+                                 edges
+                  package  = Vertex (Package pname)
+                  pkgEdges = map (\v -> Edge PkgContain L2R v package)
+                                 vertices
+              return ([package] ++ vertices
+                     , edges'   ++ pkgEdges
+                     )
 
-clazz :: Parser Char (Vertex CDNode)
-clazz = do c <- white $ brackets classBody
-           return $ Vertex c 
+clazz :: Name -> Parser Char (Vertex CDNode)
+clazz quali = do c <- white $ brackets $ classBody quali
+                 return $ Vertex c 
 
-classBody :: Parser Char CDNode
-classBody = try (do className <- componentName;
-                    white $ expect '|';
-                    fields <- sepEndBy1 field semi;
-                    white $ expect '|';
-                    methods <- sepEndBy1 method semi;
-                    return $ Class className fields methods)
-        <|> try (do className <- componentName;
-                    white $ expect '|';
-                    methods <- sepEndBy1 method semi;
-                    return $ Class className [] methods)
-        <|> try (do className <- componentName;
-                    white $ expect '|';
-                    fields <- sepEndBy1 field semi;
-                    return $ Class className fields [])
-        <|> do className <- componentName;
-               return $ Class className [] []
+classBody :: Name -> Parser Char CDNode
+classBody quali = try (do className <- componentName quali;
+                          white $ expect '|';
+                          fields <- sepEndBy1 field semi;
+                          white $ expect '|';
+                          methods <- sepEndBy1 method semi;
+                          return $ Class className fields methods)
+              <|> try (do className <- componentName quali;
+                          white $ expect '|';
+                          methods <- sepEndBy1 method semi;
+                          return $ Class className [] methods)
+              <|> try (do className <- componentName quali;
+                          white $ expect '|';
+                          fields <- sepEndBy1 field semi;
+                          return $ Class className fields [])
+              <|> do className <- componentName quali;
+                     return $ Class className [] []
 
 field :: Parser Char Field
 field = do v <- white $ visibility;
@@ -84,18 +84,18 @@ field = do v <- white $ visibility;
            return $ Field v n t
 
 -- | Parses a class diagram component name, e.g. name of a class or package.
-componentName :: Parser Char Name
-componentName = try (do quali <- name;
-                        expect '.';
-                        namePart <- componentName;
-                        return $ Qualified quali namePart)
-            <|> try (do n <- name;
-                        expect '<';
-                        nParams <- sepEndBy name comma;
-                        white $ expect '>';
-                        return $ Parametrized n nParams)
-            <|> do n <- name;
-                   return $ Name n
+componentName :: Name -> Parser Char Name
+componentName quali = try (do quali' <- name;
+                              expect '.';
+                              namePart <- componentName $ Name "";
+                              return $ join quali $ Qualified quali' namePart)
+                  <|> try (do n <- name;
+                              expect '<';
+                              nParams <- sepEndBy name comma;
+                              white $ expect '>';
+                              return $ join quali $ Parametrized n nParams)
+                  <|> do n <- name;
+                         return $ join quali $ Name n
 
 optType :: Parser Char Type
 optType = do mbType <- optionMaybe (do white $ expect ':';
@@ -138,13 +138,13 @@ param = do n <- name;
 
 
 -- # Association parsers
-association :: Parser Char [GraphElem CDNode CDAssoc]
-association = do a            <- clazz;
-                 (as, direct) <- assoc;
-                 b            <- clazz;
-                 return $ [ GVertex a
-                          , GVertex b
-                          , GEdge $ Edge as direct a b ]
+association :: Name -> Parser Char [GraphElem CDNode CDAssoc]
+association quali = do a            <- clazz quali;
+                       (as, direct) <- assoc;
+                       b            <- clazz quali;
+                       return $ [ GVertex a
+                                , GVertex b
+                                , GEdge $ Edge as direct a b ]
 
 assoc :: Parser Char (CDAssoc, Direction)
 assoc = try (extend)
