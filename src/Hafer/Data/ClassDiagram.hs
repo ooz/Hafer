@@ -52,8 +52,10 @@ type Param = (String, Type)
 
 -- Name and Type too similar
 data Name = Name String
-          | Qualified String Name
           | Parametrized String [String] 
+          | Qualified String Name
+--                    ^---------- Name that is qualified
+--                           ^--- Qualification/namespace
     deriving (Show, Eq)
 
 instance Format Name where
