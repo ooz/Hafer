@@ -78,7 +78,7 @@ export g = let vs = vertices g
 convertVertex :: CDGraph -> Vertex CDNode -> String
 convertVertex g v = case v of
     Vertex (Package name) ->
-        let nameStr = convertName name
+        let nameStr = format name
             adjas   = adjacents g v
             -- TODO: build package hierachy!
             children = filter (\a -> case a of
@@ -99,7 +99,7 @@ convertVertex g v = case v of
 --                 ++ (foldr (++) "" (map (\v -> convertVertex v ++ "\n") children)) 
 --                 ++  "}"
     Vertex (Class name fields methods) -> 
-        let name' = convertName name
+        let name' = format name
         in 
             (escape name') ++ " [ label = \"{" 
                            ++ name'
@@ -109,14 +109,14 @@ convertVertex g v = case v of
     _ -> ""
 
 
-convertName :: Name -> String
-convertName n = case n of
-    Parametrized nn [] -> nn 
-    Parametrized nn ps -> nn ++ "\\<" ++ (reduceSep ps ", ")  ++ "\\>"
-    _                  -> format n
+-- convertName :: Name -> String
+-- convertName n = case n of
+--     Parametrized nn [] -> nn ++ "FOO"
+--     Parametrized nn ps -> nn ++ "NAME" ++ "\\<" ++ (reduceSep ps ", ")  ++ "\\>"
+--     _                  -> format n
 
-reduceSep :: [String] -> String -> String
-reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
+-- reduceSep :: [String] -> String -> String
+-- reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
 
 addFields :: [Field] -> String
 addFields l = case l of 
@@ -201,6 +201,6 @@ convertArrow d l r = let l' = escape (extractNodeName l)
 
 extractNodeName :: Vertex CDNode -> String
 extractNodeName (Vertex n) = case n of
-    Class name _ _   -> convertName name
-    Interface name _ -> convertName name
-    Package name     -> convertName name
+    Class name _ _   -> format name
+    Interface name _ -> format name
+    Package name     -> format name

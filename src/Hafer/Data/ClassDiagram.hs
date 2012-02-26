@@ -62,7 +62,10 @@ instance Format Name where
     format n = case n of
         Name ns -> ns
         Qualified qs n' -> qs ++ "." ++ format n'
-        Parametrized ns ps -> ns -- TODO: maybe include parameters in formatted string
+        Parametrized ns ps -> ns ++ "\\<" ++ (reduceSep ps ", ") ++ "\\>" -- TODO: maybe include parameters in formatted string
+
+reduceSep :: [String] -> String -> String
+reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
 
 -- | Finds the longest common prefix of two names.
 commonName :: Name -> Name -> Maybe Name
