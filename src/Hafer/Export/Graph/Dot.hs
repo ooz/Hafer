@@ -51,9 +51,9 @@ convertVertex :: Format a =>
 convertVertex (Vertex a) = let 
                             aLabel = format a
                            in
-                            (escape aLabel) ++ " [ label = \"{"
+                            (escape aLabel) ++ " [ label = \""
                                             ++ aLabel
-                                            ++ "}\" ]"
+                                            ++ "\" ]"
 
 convertEdge :: (Format v, Format e) => 
                (Edge v e) -> String
