@@ -10,7 +10,6 @@ cGRAPH_START = "digraph G {"
 cGRAPH_END   = "}"
 
 cGENERAL_CONFIG = "fontname = \"Bitstream Vera Sans\";\
-\ concentrate = \"true\";\
 \ rankdir = \"TD\";\
 \ fontsize = 8;"
 
