@@ -2,6 +2,8 @@ module Hafer.Data.GenericGraph
 ( module Hafer.Data.GenericGraph -- TODO: proper interface 
 ) where
 
+import Data.List (find)
+
 -- Data declarations
 data Graph v e = MathGraph    [Vertex v] [Edge v e]
                | ElemSetGraph [GraphElem v e]
@@ -66,9 +68,15 @@ isConnectedVia v (Edge e dir a b) =
 adjacents :: Eq v => 
              Graph v e -> Vertex v -> [Vertex v]
 adjacents g v = let es = edgesFor g v
-                in  map ( \e -> case e of
-                                Edge e' dir a b -> if a == v 
-                                                   then b
-                                                   else a
-                        ) 
-                        es
+                    vs = vertices g
+                    adjaRefs = map ( \e -> case e of
+                                            Edge e' dir a b -> if a == v 
+                                                               then b
+                                                               else a
+                                   ) 
+                                   es
+                in  map (\ref -> case (find (\v -> v == ref) vs) of
+                                  Just v  -> v
+                                  Nothing -> ref
+                        )
+                        adjaRefs
