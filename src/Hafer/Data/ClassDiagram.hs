@@ -82,6 +82,9 @@ instance Format Name where
         Qualified qs n' -> qs ++ "." ++ format n'
         Parametrized ns ps -> ns ++ "\\<" ++ (reduceSep ps ", ") ++ "\\>" -- TODO: maybe include parameters in formatted string
 
+instance Ord Name where
+    (<=) a b = isPrefix a b
+
 reduceSep :: [String] -> String -> String
 reduceSep (l:ls) s = foldl (\a b -> a ++ s ++ b) l ls
 
