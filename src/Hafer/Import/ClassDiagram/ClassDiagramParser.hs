@@ -5,7 +5,7 @@ module Hafer.Import.ClassDiagram.ClassDiagramParser
 , imprt
 ) where
 
-import Data.List (partition)
+import Data.List (partition, delete)
 
 import Hafer.Import.ImportMethod
 
@@ -23,7 +23,49 @@ testAssoc  = "[Foo]---[Bar]"
 
 classdiagram :: Parser Char CDGraph             -- v--- no qualification
 classdiagram = do comps <- many $ classDiagramComp $ Name ""
+                  return $ removeRedefinitions $ ElemSetGraph $ concat comps
                   return $ ElemSetGraph $ concat comps
+
+-- | Remove duplicate class/interface definitions.
+--   Prefers definitions withs fields/methods over definitions
+--   with just a name.
+--   If both definitions got fields/methods it prefers the first
+--   definition (see "greater" function).
+removeRedefinitions :: CDGraph -> CDGraph
+removeRedefinitions g = 
+    let
+        vs = vertices g
+        es = edges g
+        cdNodes = map (\v -> case v of Vertex n -> n) vs
+        uniqueNodes = removeNodeDuplicates cdNodes
+        vs' = map (\n -> Vertex n) uniqueNodes
+    in
+        MathGraph vs' es
+
+removeNodeDuplicates :: [CDNode] -> [CDNode]
+removeNodeDuplicates ns = case ns of
+    []      -> []
+    (a:ns') -> let
+                (a', ns'') = (findGreatestDefinition a ns')
+               in
+                a':(removeNodeDuplicates ns'')
+
+findGreatestDefinition :: CDNode -> [CDNode] -> (CDNode, [CDNode])
+findGreatestDefinition a ns = case ns of
+    []      -> (a, [])
+    (b:ns') -> if (nodeName a == nodeName b)
+               then findGreatestDefinition (greater a b) ns'
+               else let
+                     (g, rest) = findGreatestDefinition a ns'
+                    in
+                     (g, b:rest)
+
+greater :: CDNode -> CDNode -> CDNode 
+greater a@(Class an [] [])   b@(Class bn bfs bms) = b
+greater a@(Class an afs ams) b@(Class bn [] [])   = a
+greater a@(Interface an [])  b@(Interface bn bms) = b
+greater a@(Interface an ams) b@(Interface bn [])  = a 
+greater a@(_) b@(_) = a
 
 classDiagramComp :: Name -> Parser Char [GraphElem CDNode CDAssoc]
 classDiagramComp quali = try (do comps <- nonPackageComp quali;
@@ -47,15 +89,17 @@ package  = do pname <- componentName $ Name "";
                                                  GEdge _   -> False)
                                              $ concat comps
                   vertices = map (\a -> case a of
-                                         GVertex a' -> a')
+                                         GVertex (Vertex a') -> a')
                                  nodes
+                  vertices' = map (\n -> Vertex n) $
+                              removeNodeDuplicates vertices
                   edges'   = map (\a -> case a of
                                          GEdge a' -> a')
                                  edges
                   package  = Vertex (Package pname)
                   pkgEdges = map (\v -> Edge PkgContain L2R v package)
-                                 vertices
-              return ([package] ++ vertices
+                                 vertices'
+              return ([package] ++ vertices'
                      , edges'   ++ pkgEdges
                      )
 
