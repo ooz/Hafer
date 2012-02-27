@@ -21,6 +21,13 @@ data CDNode = Class Name [Field] [Method]
             | Reference Name
     deriving (Show, Eq)
 
+nodeName :: CDNode -> Name
+nodeName node = case node of
+    Class n _ _   -> n
+    Interface n _ -> n
+    Package n     -> n
+    Reference n   -> n
+
 instance Format CDNode where
     format n = case n of
         Class name _ _   -> format name
