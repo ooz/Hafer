@@ -65,6 +65,8 @@ greater a@(Class an [] [])   b@(Class bn bfs bms) = b
 greater a@(Class an afs ams) b@(Class bn [] [])   = a
 greater a@(Interface an [])  b@(Interface bn bms) = b
 greater a@(Interface an ams) b@(Interface bn [])  = a 
+greater a@(Reference _)      b@(_)                = b
+greater a@(_)                b@(Reference _)      = a
 greater a@(_) b@(_) = a
 
 classDiagramComp :: Name -> Parser Char [GraphElem CDNode CDAssoc]
