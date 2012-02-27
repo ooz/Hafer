@@ -19,7 +19,17 @@ data CDNode = Class Name [Field] [Method]
             | Interface Name [Method]
             | Package Name
             | Reference Name
-    deriving (Show, Eq)
+    deriving (Show)
+
+instance Eq CDNode where
+    (==) a b | nodeName a == nodeName b = case (a, b) of
+        (Reference _, _)                   -> True
+        (_, Reference _)                   -> True
+        (Class _ afs ams, Class _ bfs bms) -> afs == bfs && ams == bms
+        (Interface _ ams, Interface _ bms) -> ams == bms
+        (Package _, Package _)             -> True
+        (_, _)                             -> False
+    (==) a b | nodeName a /= nodeName b = False
 
 nodeName :: CDNode -> Name
 nodeName node = case node of
