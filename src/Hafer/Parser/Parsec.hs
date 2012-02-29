@@ -43,7 +43,8 @@ parse p ts =
         in  error $ unlines [ "parse error", this, underline, show msg ]
     
 complete :: Parser Char a -> Parser Char a
-complete p = do  x <- p ; 
+complete p = do  whitespace ;
+                 x <- p ; 
                  eof ; 
                  return x
     
