@@ -5,27 +5,24 @@ module Main
 import System (getArgs)
 
 import Data.Char
+import Data.List (isInfixOf)
 import Data.Data
 import Data.Maybe
 
 import Hafer.Data.ClassDiagram
 import qualified Hafer.Import.ClassDiagram.ClassDiagramParser as I
 
---import qualified Hafer.Export.ClassDiagram.Dot as CD2Dot
+import qualified Hafer.Export.ClassDiagram.Dot as CD2Dot
 import qualified Hafer.Export.Graph.Dot as G2Dot
 
+import Hafer.Metric.ClassDiagram.Coupling as CDMCoup
+
 main :: IO ()
-main = do [inFile] <- getArgs;
+main = do [options, inFile] <- getArgs;
           input  <- readFile inFile;
-          putStr $ G2Dot.exprt ((I.imprt input) :: CDGraph)
+          case input of
+              _ | (isInfixOf "--graph" options)    -> putStr $ G2Dot.exprt ((I.imprt input) :: CDGraph)
+              _ | (isInfixOf "--classdiagram"   options)    -> putStr $ CD2Dot.export ((I.imprt input) :: CDGraph)
+              _ | (isInfixOf "--java" options)     -> putStr $ "java"
+              _ | (isInfixOf "--coupling" options) -> putStr $ (show ((CDMCoup.evaluate ((I.imprt input) :: CDGraph)) :: Int)) ++ "\n"
 
--- parse :: String -> Graph
--- parse s = Node "foobar" 
-
--- TODO: define correctly
--- type ImportMethod = String
--- transform :: Graph -> ImportMethod -> String
--- transform g m = ""
-
-testClass = "[Class1]"
-testRel   = "[Class1]---[Class2]"

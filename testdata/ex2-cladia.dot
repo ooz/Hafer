@@ -1,0 +1,152 @@
+digraph G {
+fontname = "Bitstream Vera Sans"; rankdir = "TD"; fontsize = 8;
+node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "record" ]
+edge [ fontname = "Bitstream Vera Sans" fontsize = 8 ]
+subgraph clusterdata_genericgraph { label = "data.genericgraph"
+data_genericgraph_Graph__V__E__ [ label = "{Graph\<V, E\>|+ elems() : List\<GraphElem\<V, E\>\>\l+ vertices() : List\<Vertex\<V\>\>\l+ edges() : List\<Edge\<E\>\>\l}" ]
+data_genericgraph_GraphElem__V__E__ [ label = "{GraphElem\<V, E\>}" ]
+data_genericgraph_GVertex__V__ [ label = "{GVertex\<V\>}" ]
+data_genericgraph_GEdge__V__E__ [ label = "{GEdge\<V, E\>}" ]
+data_genericgraph_Vertex__T__ [ label = "{Vertex\<T\>|+ get() : T\l+ children() : List\<Vertex\<V\>\>\l}" ]
+data_genericgraph_Edge__V__E__ [ label = "{Edge\<V, E\>|+ get() : E\l+ left() : Vertex\<V\>\l+ right() : Vertex\<V\>\l}" ]
+}
+subgraph clusterdata_classdiagram { label = "data.classdiagram"
+data_classdiagram_Graph__CDNode__CDEdge__ [ label = "{Graph\<CDNode, CDEdge\>}" ]
+data_classdiagram_CDGraph [ label = "{CDGraph}" ]
+data_classdiagram_GraphElem__CDNode__CDEdge__ [ label = "{GraphElem\<CDNode, CDEdge\>}" ]
+data_classdiagram_CDElem [ label = "{CDElem}" ]
+data_classdiagram_CDNode [ label = "{CDNode}" ]
+data_classdiagram_Package [ label = "{Package|+ name() : Name\l}" ]
+data_classdiagram_Interface [ label = "{Interface|+ name() : Type\l+ methods() : List\<Method\>\l}" ]
+data_classdiagram_Class [ label = "{Class|+ fields() : List\<Field\>\l}" ]
+data_classdiagram_Note [ label = "{Note}" ]
+data_classdiagram_CDEdge [ label = "{CDEdge}" ]
+data_classdiagram_Association [ label = "{Association}" ]
+data_classdiagram_Aggregation [ label = "{Aggregation}" ]
+data_classdiagram_Composition [ label = "{Composition}" ]
+data_classdiagram_Inheritance [ label = "{Inheritance}" ]
+data_classdiagram_Field [ label = "{Field|+ visibility() : Visibility\l+ name() : Name\l+ type() : Type\l}" ]
+data_classdiagram_Method [ label = "{Method|+ param() : List\<Param\>\l}" ]
+data_classdiagram_Visibility [ label = "{Visibility}" ]
+data_classdiagram_VisDefault [ label = "{VisDefault}" ]
+data_classdiagram_VisPrivate [ label = "{VisPrivate}" ]
+data_classdiagram_VisPackage [ label = "{VisPackage}" ]
+data_classdiagram_VisPublic [ label = "{VisPublic}" ]
+data_classdiagram_Param [ label = "{Param|+ name() : Name\l+ type() : Type\l}" ]
+data_classdiagram_String [ label = "{String}" ]
+data_classdiagram_Name [ label = "{Name}" ]
+data_classdiagram_Type [ label = "{Type}" ]
+data_classdiagram_Simple [ label = "{Simple|+ name() : Name\l}" ]
+data_classdiagram_Generic [ label = "{Generic}" ]
+}
+subgraph clusterdata_erdiagram { label = "data.erdiagram"
+}
+subgraph clusterimport { label = "import"
+import_ImportModule__I__G__ [ label = "{ImportModule\<I, G\>|+ imprt(inputI) : G\l}" ]
+}
+subgraph clusterimport_classdiagram { label = "import.classdiagram"
+import_classdiagram_ImportModule__String__CDGraph__ [ label = "{ImportModule\<String, CDGraph\>}" ]
+import_classdiagram_ClassDiagramParser [ label = "{ClassDiagramParser|+ imprt(inputString) : CDGraph\l}" ]
+}
+subgraph clusterparser { label = "parser"
+parser_ParserFascade__T__ [ label = "{ParserFascade\<T\>|+ parse(pParser\<T\>, inString) : T\l+ parsers() : Map\<String, Parser\<T\>\>\l}" ]
+parser_Parser [ label = "{Parser}" ]
+parser_Parsec [ label = "{Parsec}" ]
+parser_text_parsec_language_LanguageDef [ label = "{text.parsec.language.LanguageDef}" ]
+parser_DiagramDef [ label = "{DiagramDef}" ]
+}
+subgraph clusterexport { label = "export"
+export_ExportModule__G__O__ [ label = "{ExportModule\<G, O\>|+ exprt(graphG) : O\l}" ]
+}
+subgraph clusterexport_codegenerator { label = "export.codegenerator"
+export_codegenerator_ExportModule__G__String__ [ label = "{ExportModule\<G, String\>}" ]
+export_codegenerator_SimpleCodeGenerator__G__ [ label = "{SimpleCodeGenerator\<G\>}" ]
+export_codegenerator_ExportModule__G__IOAction__ [ label = "{ExportModule\<G, IOAction\>}" ]
+export_codegenerator_ProjektCodeGenerator__G__ [ label = "{ProjektCodeGenerator\<G\>}" ]
+}
+subgraph clusterexport_classdiagram { label = "export.classdiagram"
+export_classdiagram_SimpleCodeGenerator__CDGraph__ [ label = "{SimpleCodeGenerator\<CDGraph\>}" ]
+export_classdiagram_ClassDiagramToDot [ label = "{ClassDiagramToDot}" ]
+export_classdiagram_ExportModule__G__IOAction__ [ label = "{ExportModule\<G, IOAction\>}" ]
+export_classdiagram_ProjektCodeGenerator__G__ [ label = "{ProjektCodeGenerator\<G\>}" ]
+}
+subgraph clustermetric { label = "metric"
+metric_Metric__M__G__ [ label = "{Metric\<M, G\>|+ evaluate(graphG) : M\l}" ]
+metric_GenericMetric__M__ [ label = "{GenericMetric\<M\>}" ]
+metric_GenericMetric__int__ [ label = "{GenericMetric\<int\>}" ]
+metric_MaxDegreeMetric [ label = "{MaxDegreeMetric}" ]
+metric_CycleMetric [ label = "{CycleMetric}" ]
+}
+subgraph clustermetric_softwaredesign { label = "metric.softwaredesign"
+metric_softwaredesign_Metric__M__CDGraph__ [ label = "{Metric\<M, CDGraph\>}" ]
+metric_softwaredesign_SoftwareDesignMetric__M__ [ label = "{SoftwareDesignMetric\<M\>}" ]
+metric_softwaredesign_SoftwareDesignMetric__Float__ [ label = "{SoftwareDesignMetric\<Float\>}" ]
+metric_softwaredesign_CouplingMetric [ label = "{CouplingMetric}" ]
+}
+subgraph clusterdata_erdiagram { label = "data.erdiagram"
+}
+edge [ arrowhead = "empty" ]
+data_genericgraph_GVertex__V__ -> data_genericgraph_GraphElem__V__E__
+edge [ arrowhead = "empty" ]
+data_genericgraph_GEdge__V__E__ -> data_genericgraph_GraphElem__V__E__
+edge [ arrowhead = "empty" ]
+data_classdiagram_CDGraph -> data_classdiagram_Graph__CDNode__CDEdge__
+edge [ arrowhead = "empty" ]
+data_classdiagram_CDElem -> data_classdiagram_GraphElem__CDNode__CDEdge__
+edge [ arrowhead = "empty" ]
+data_classdiagram_Package -> data_classdiagram_CDNode
+edge [ arrowhead = "empty" ]
+data_classdiagram_Interface -> data_classdiagram_CDNode
+edge [ arrowhead = "empty" ]
+data_classdiagram_Class -> data_classdiagram_Interface
+edge [ arrowhead = "empty" ]
+data_classdiagram_Note -> data_classdiagram_CDNode
+edge [ arrowhead = "empty" ]
+data_classdiagram_Association -> data_classdiagram_CDEdge
+edge [ arrowhead = "empty" ]
+data_classdiagram_Aggregation -> data_classdiagram_CDEdge
+edge [ arrowhead = "empty" ]
+data_classdiagram_Composition -> data_classdiagram_CDEdge
+edge [ arrowhead = "empty" ]
+data_classdiagram_Inheritance -> data_classdiagram_CDEdge
+edge [ arrowhead = "empty" ]
+data_classdiagram_Method -> data_classdiagram_Field
+edge [ arrowhead = "empty" ]
+data_classdiagram_VisDefault -> data_classdiagram_Visibility
+edge [ arrowhead = "empty" ]
+data_classdiagram_VisPrivate -> data_classdiagram_Visibility
+edge [ arrowhead = "empty" ]
+data_classdiagram_VisPackage -> data_classdiagram_Visibility
+edge [ arrowhead = "empty" ]
+data_classdiagram_VisPublic -> data_classdiagram_Visibility
+edge [ arrowhead = "empty" ]
+data_classdiagram_Name -> data_classdiagram_String
+edge [ arrowhead = "empty" ]
+data_classdiagram_Simple -> data_classdiagram_Type
+edge [ arrowhead = "empty" ]
+data_classdiagram_Generic -> data_classdiagram_Type
+edge [ arrowhead = "empty" ]
+import_classdiagram_ClassDiagramParser -> import_classdiagram_ImportModule__String__CDGraph__
+edge [ arrowhead = "empty" ]
+parser_Parsec -> parser_Parser
+edge [ arrowhead = "empty" ]
+parser_DiagramDef -> parser_text_parsec_language_LanguageDef
+edge [ arrowhead = "empty" ]
+export_codegenerator_SimpleCodeGenerator__G__ -> export_codegenerator_ExportModule__G__String__
+edge [ arrowhead = "empty" ]
+export_codegenerator_ProjektCodeGenerator__G__ -> export_codegenerator_ExportModule__G__IOAction__
+edge [ arrowhead = "empty" ]
+export_classdiagram_ClassDiagramToDot -> export_classdiagram_SimpleCodeGenerator__CDGraph__
+edge [ arrowhead = "empty" ]
+export_classdiagram_ProjektCodeGenerator__G__ -> export_classdiagram_ExportModule__G__IOAction__
+edge [ arrowhead = "empty" ]
+metric_GenericMetric__M__ -> metric_Metric__M__G__
+edge [ arrowhead = "empty" ]
+metric_MaxDegreeMetric -> metric_GenericMetric__int__
+edge [ arrowhead = "empty" ]
+metric_CycleMetric -> metric_GenericMetric__int__
+edge [ arrowhead = "empty" ]
+metric_softwaredesign_SoftwareDesignMetric__M__ -> metric_softwaredesign_Metric__M__CDGraph__
+edge [ arrowhead = "empty" ]
+metric_softwaredesign_CouplingMetric -> metric_softwaredesign_SoftwareDesignMetric__Float__
+}

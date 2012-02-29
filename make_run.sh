@@ -9,5 +9,9 @@ pushd ./
 cd src
 ghc --make Main -outputdir ../build -o ../build/hafer
 popd
-./build/hafer $TXT_IN > $DOT_OUT
-dot -T png -o $IMG_OUT $DOT_OUT
+./build/hafer --coupling $TXT_IN > $FILE-coupling.txt
+./build/hafer --java $TXT_IN > $FILE-java.txt
+./build/hafer --classdiagram $TXT_IN > $FILE-cladia.dot
+dot -T png -o $FILE-cladia.png $FILE-cladia.dot
+./build/hafer --graph $TXT_IN > $FILE-graph.dot
+dot -T png -o $FILE-graph.png $FILE-graph.dot

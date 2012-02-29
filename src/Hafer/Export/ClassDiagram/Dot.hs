@@ -1,8 +1,9 @@
 {-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
 
 module Hafer.Export.ClassDiagram.Dot 
-( ExportMethod
-, exprt
+--( ExportMethod
+--, exprt
+( export
 ) where
 
 import Data.List (find)
@@ -18,8 +19,8 @@ import Hafer.Export.Common.Dot ( cGRAPH_START
 import Hafer.Export.ExportMethod
 import Hafer.Data.ClassDiagram
 
-instance ExportMethod CDGraph String where
-    exprt g = export g
+-- instance ExportMethod CDGraph String where
+--     exprt g = export g
 
 
 
