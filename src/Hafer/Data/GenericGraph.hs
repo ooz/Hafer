@@ -80,3 +80,19 @@ adjacents g v = let es = edgesFor g v
                                   Nothing -> ref
                         )
                         adjaRefs
+
+-- ##########################################################################
+-- # Graph properties
+-- ##########################################################################
+
+degree :: Eq v => Graph v e -> [(Vertex v, Int)]
+degree g = let 
+            vs = vertices g
+           in map (\v -> let 
+                           adjas = adjacents g v
+                         in
+                           (v, length adjas)
+                  ) vs
+
+maxDegree :: Eq v => Graph v e -> Int
+maxDegree g = maximum $ map (\(v, d) -> d) $ degree g
