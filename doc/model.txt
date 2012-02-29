@@ -56,16 +56,15 @@ data.classdiagram:
 [Field  | +visibility() : Visibility; +name() : Name; +type(): Type]
 [Field]^--[Method | +param() : List<Param>]
 
-[Visibility]^-[NotSpecified]
-[Visibility]^-[Default]
-[Visibility]^-[Private]
-[Visibility]^-[Package]
-[Visibility]^-[Public]
+[Visibility]^-[VisDefault]
+[Visibility]^-[VisPrivate]
+[Visibility]^-[VisPackage]
+[Visibility]^-[VisPublic]
 
 [Param | +name():Name; +type():Type]
 [String]^-[Name]
 [Type]^-[Simple  | +name() : Name]
-[Type]^-[Generic | ]
+[Type]^-[Generic]
 
 
 data.erdiagram:
@@ -103,7 +102,7 @@ export.codegenerator:
 [ExportModule<G, IOAction>]
 ^--[ProjektCodeGenerator<G>]
 
-export.classdiagram
+export.classdiagram:
 [SimpleCodeGenerator<CDGraph>]
 ^--[ClassDiagramToDot]
 [ExportModule<G, IOAction>]
@@ -116,12 +115,12 @@ metric:
 [Metric<M, G>]^--[GenericMetric<M>]
 
 # Example generic metrics
-[GenericMetric<Tuple<Int, Int>>]
+[GenericMetric<int>]
 ^--[MaxDegreeMetric]
-[GenericMetric<Int>]
+[GenericMetric<int>]
 ^--[CycleMetric]
  
 
-metric.softwaredesign
+metric.softwaredesign:
 [Metric<M, CDGraph>]^-[SoftwareDesignMetric<M>]
 [SoftwareDesignMetric<Float>]^-[CouplingMetric]
