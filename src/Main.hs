@@ -13,6 +13,7 @@ import Hafer.Data.ClassDiagram
 import qualified Hafer.Import.ClassDiagram.ClassDiagramParser as I
 
 import qualified Hafer.Export.ClassDiagram.Dot as CD2Dot
+import qualified Hafer.Export.ClassDiagram.Java as CD2Java
 import qualified Hafer.Export.Graph.Dot as G2Dot
 
 import Hafer.Metric.ClassDiagram.Coupling as CDMCoup
@@ -23,6 +24,6 @@ main = do [options, inFile] <- getArgs;
           case input of
               _ | (isInfixOf "--graph" options)    -> putStr $ G2Dot.exprt ((I.imprt input) :: CDGraph)
               _ | (isInfixOf "--classdiagram"   options)    -> putStr $ CD2Dot.export ((I.imprt input) :: CDGraph)
-              _ | (isInfixOf "--java" options)     -> putStr $ "java"
+              _ | (isInfixOf "--java"   options)    -> putStr $ CD2Java.export ((I.imprt input) :: CDGraph)
               _ | (isInfixOf "--coupling" options) -> putStr $ (show ((CDMCoup.evaluate ((I.imprt input) :: CDGraph)) :: Int)) ++ "\n"
 
