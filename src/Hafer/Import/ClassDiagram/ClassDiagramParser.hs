@@ -201,9 +201,12 @@ association quali = do a@(Vertex (Class aName _ _)) <- clazz quali;
 
 assoc :: Parser Char (CDAssoc, Direction)
 assoc = try (extend)
-    <|> try (plainAssoc)
-    <|> try (composition)
-    <|> aggregation
+    <|> cardLabeledAssoc
+
+cardLabeledAssoc :: Parser Char (CDAssoc, Direction)
+cardLabeledAssoc = try (plainAssoc)
+               <|> try (composition)
+               <|> aggregation
 
 extend :: Parser Char (CDAssoc, Direction)
 extend = do expect '^';
@@ -212,6 +215,17 @@ extend = do expect '^';
      <|> do many1 $ expect '-';
             expect '^';
             return $ (Extend, L2R)
+
+cardinality :: Parser Char Cardinality
+cardinality = try (do expect '1';
+                      return $ OneCard)
+          <|> do expects "1..*";
+                 return $ OneManyCard
+          <|> try (do expects "0..1";
+                      return $ ZeroOneCard)
+          <|> do expects "0..*";
+                 return $ ZeroManyCard
+                 
 
 plainAssoc :: Parser Char (CDAssoc, Direction)
 plainAssoc = try (do expect '<';
