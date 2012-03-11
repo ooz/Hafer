@@ -168,11 +168,15 @@ data Visibility = VisDefault
     deriving (Show, Eq)
 
 type Label = String
-data AssocProp = LeftEnd  Label Multiplicity
-               | RightEnd Label Multiplicity
-               | Center Label
+data AssocProp = LeftEnd  Label Cardinality
+               | RightEnd Label Cardinality
+               | Center   Label
     deriving (Show, Eq)
                      
-data Multiplicity = Custom String
+data Cardinality = CustomCard String
+                 | ZeroOneCard
+                 | ZeroManyCard
+                 | OneCard
+                 | OneManyCard
     deriving (Show, Eq)
 
