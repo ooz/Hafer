@@ -39,7 +39,9 @@ _EDGE_CONFIG = "edge [\
 \ fontsize = 8\
 \ ]"
 
-_EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" ]"
+_EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" ]"
+_EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" ]"
+_EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" ]"
 
 
 
@@ -204,6 +206,8 @@ convertEdge e = case e of
 convertEdgeType :: CDAssoc -> String
 convertEdgeType a = case a of
     Extend -> _EDGE_EXTEND_CONFIG
+    Aggregation _ -> _EDGE_AGGREGATION_CONFIG
+    Composition _ -> _EDGE_COMPOSITION_CONFIG
 
 convertArrow :: Direction -> Vertex CDNode -> Vertex CDNode -> String
 convertArrow d l r = let l' = escape (extractNodeName l)
