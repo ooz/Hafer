@@ -255,8 +255,8 @@ aggregation :: Parser Char (CDAssoc, Direction)
 aggregation = do choice $ [expects "<>", expects "+"];
                  many1 $ expect '-';
                  expect '>';
-                 return $ (Composition [], L2R)
+                 return $ (Aggregation [], L2R)
           <|> do expect '<';
                  many1 $ expect '-';
                  choice $ [expects "<>", expects "+"];
-                 return $ (Composition [], R2L)
+                 return $ (Aggregation [], R2L)
