@@ -251,36 +251,60 @@ centerAssocProp :: Parser Char AssocProp
 centerAssocProp = do labl <- role;
                      return $ Center labl
 
+extractAssocProp :: Maybe AssocProp -> [AssocProp]
+extractAssocProp mbAP = case mbAP of
+    Just ap -> [ap]
+    Nothing -> []
+-- short hand:
+eAP = extractAssocProp
+
+extractAssocProps :: [Maybe AssocProp] -> [AssocProp]
+extractAssocProps mbAPs = foldl (++) [] (map eAP mbAPs)
+-- short hand:
+eAPs = extractAssocProps
+
 plainAssoc :: Parser Char (CDAssoc, Direction)
-plainAssoc = try (do expect '<';
-                     many1 $ expect '-';
-                     return $ (Association [], R2L))
-         <|> try (do expect '<';
-                     many1 $ expect '-';
-                     expect '>';
-                     return $ (Association [], Both))
-         <|> try (do many1 $ expect '-';
-                     expect '>';
-                     return $ (Association [], L2R))
-         <|>      do many1 $ expect '-';
-                             return $ (Association [], None)
+plainAssoc = do mbL <- optionMaybe leftAssocProp;
+                (Association _, dir) <- plainAssocWithoutProp
+                mbR <- optionMaybe rightAssocProp;
+                return $ (Association (eAPs [mbL, mbR]), dir)
+
+plainAssocWithoutProp :: Parser Char (CDAssoc, Direction)
+plainAssocWithoutProp = try (do expect '<';
+                                many1 $ expect '-';
+                                return $ (Association [], R2L))
+                    <|> try (do expect '<';
+                                many1 $ expect '-';
+                                expect '>';
+                                return $ (Association [], Both))
+                    <|> try (do many1 $ expect '-';
+                                expect '>';
+                                return $ (Association [], L2R))
+                    <|>      do many1 $ expect '-';
+                                return $ (Association [], None)
 
 composition :: Parser Char (CDAssoc, Direction)
 composition = do expects "++";
                  many1 $ expect '-';
                  expect '>';
-                 return $ (Composition [], L2R)
-          <|> do expect '<';
+                 mbR <- optionMaybe rightAssocProp;
+                 return $ (Composition (eAP mbR), L2R)
+          <|> do mbL <- optionMaybe leftAssocProp;
+                 expect '<';
                  many1 $ expect '-';
                  expects "++";
-                 return $ (Composition [], R2L)
+                 return $ (Composition (eAP mbL), R2L)
 
 aggregation :: Parser Char (CDAssoc, Direction)
-aggregation = do choice $ [expects "<>", expects "+"];
+aggregation = do mbL <- optionMaybe leftAssocProp
+                 choice $ [expects "<>", expects "+"];
                  many1 $ expect '-';
                  expect '>';
-                 return $ (Aggregation [], L2R)
-          <|> do expect '<';
+                 mbR <- optionMaybe rightAssocProp
+                 return $ (Aggregation (eAPs [mbL, mbR]), L2R)
+          <|> do mbL <- optionMaybe leftAssocProp
+                 expect '<';
                  many1 $ expect '-';
                  choice $ [expects "<>", expects "+"];
-                 return $ (Aggregation [], R2L)
+                 mbR <- optionMaybe rightAssocProp
+                 return $ (Aggregation (eAPs [mbL, mbR]), R2L)
