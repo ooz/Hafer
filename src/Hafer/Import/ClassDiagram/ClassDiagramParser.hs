@@ -225,7 +225,31 @@ cardinality = try (do expect '1';
                       return $ ZeroOneCard)
           <|> do expects "0..*";
                  return $ ZeroManyCard
-                 
+
+role :: Parser Char Label
+role = name
+
+leftAssocProp :: Parser Char AssocProp
+leftAssocProp = try (do card <- cardinality;
+                        return $ LeftEnd "" card)
+            <|> do card <- cardinality;
+                   labl <- role;
+                   return $ LeftEnd labl card
+            <|> try (do labl <- role;
+                        return $ LeftEnd labl (CustomCard ""))
+            <|> do labl <- role;
+                   card <- cardinality;
+                   return $ LeftEnd labl card
+
+rightAssocProp :: Parser Char AssocProp
+rightAssocProp = do prop <- leftAssocProp;
+                    case prop of
+                        LeftEnd labl card -> return $ RightEnd labl card
+                        _                 -> return $ prop
+
+centerAssocProp :: Parser Char AssocProp
+centerAssocProp = do labl <- role;
+                     return $ Center labl
 
 plainAssoc :: Parser Char (CDAssoc, Direction)
 plainAssoc = try (do expect '<';
