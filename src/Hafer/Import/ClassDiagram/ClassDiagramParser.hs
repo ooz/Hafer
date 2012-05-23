@@ -1,20 +1,16 @@
 {-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
 
 module Hafer.Import.ClassDiagram.ClassDiagramParser
-( ImportMethod 
-, imprt
+( imprt
 ) where
 
 import Data.List (partition, delete)
-
-import Hafer.Import.ImportMethod
 
 import Hafer.Parser.Parser as P
 import Hafer.Data.GenericGraph
 import Hafer.Data.ClassDiagram
 
-instance ImportMethod String CDGraph where
-    imprt s = P.parse classdiagram s
+imprt s = P.parse classdiagram s
 
 __test__   = testClass1 ++ " " ++ testClass2 ++ " " ++ testAssoc 
 testClass1 = "[Foo| -bar : t; baz:s;bob |+bla();~blub(i : int, j:int) : Bob]"
