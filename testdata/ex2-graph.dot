@@ -5,10 +5,16 @@ edge [ arrowhead = "normal" fontname = "Bitstream Vera Sans" fontsize = 8 ]
 data_genericgraph [ label = "data.genericgraph" ]
 data_genericgraph_Graph__V__E__ [ label = "data.genericgraph.Graph\<V, E\>" ]
 data_genericgraph_GraphElem__V__E__ [ label = "data.genericgraph.GraphElem\<V, E\>" ]
-data_genericgraph_GVertex__V__ [ label = "data.genericgraph.GVertex\<V\>" ]
-data_genericgraph_GEdge__V__E__ [ label = "data.genericgraph.GEdge\<V, E\>" ]
 data_genericgraph_Vertex__T__ [ label = "data.genericgraph.Vertex\<T\>" ]
 data_genericgraph_Edge__V__E__ [ label = "data.genericgraph.Edge\<V, E\>" ]
+data_genericgraph_GVertex__V__ [ label = "data.genericgraph.GVertex\<V\>" ]
+data_genericgraph_GEdge__V__E__ [ label = "data.genericgraph.GEdge\<V, E\>" ]
+data_genericgraph_Vertex__V__ [ label = "data.genericgraph.Vertex\<V\>" ]
+data_genericgraph_Direction [ label = "data.genericgraph.Direction" ]
+data_genericgraph_None [ label = "data.genericgraph.None" ]
+data_genericgraph_L2R [ label = "data.genericgraph.L2R" ]
+data_genericgraph_R2L [ label = "data.genericgraph.R2L" ]
+data_genericgraph_Both [ label = "data.genericgraph.Both" ]
 data_classdiagram [ label = "data.classdiagram" ]
 data_classdiagram_Graph__CDNode__CDEdge__ [ label = "data.classdiagram.Graph\<CDNode, CDEdge\>" ]
 data_classdiagram_CDGraph [ label = "data.classdiagram.CDGraph" ]
@@ -72,14 +78,29 @@ metric_softwaredesign_Metric__M__CDGraph__ [ label = "metric.softwaredesign.Metr
 metric_softwaredesign_SoftwareDesignMetric__M__ [ label = "metric.softwaredesign.SoftwareDesignMetric\<M\>" ]
 metric_softwaredesign_SoftwareDesignMetric__Float__ [ label = "metric.softwaredesign.SoftwareDesignMetric\<Float\>" ]
 metric_softwaredesign_CouplingMetric [ label = "metric.softwaredesign.CouplingMetric" ]
+data_genericgraph_Graph__V__E__ -> data_genericgraph_GraphElem__V__E__
+data_genericgraph_Graph__V__E__ -> data_genericgraph_Vertex__T__
+data_genericgraph_Graph__V__E__ -> data_genericgraph_Edge__V__E__
 data_genericgraph_GVertex__V__ -> data_genericgraph_GraphElem__V__E__
 data_genericgraph_GEdge__V__E__ -> data_genericgraph_GraphElem__V__E__
+data_genericgraph_GVertex__V__ -> data_genericgraph_Vertex__V__
+data_genericgraph_GEdge__V__E__ -> data_genericgraph_Edge__V__E__
+data_genericgraph_None -> data_genericgraph_Direction
+data_genericgraph_L2R -> data_genericgraph_Direction
+data_genericgraph_R2L -> data_genericgraph_Direction
+data_genericgraph_Both -> data_genericgraph_Direction
 data_genericgraph_Graph__V__E__ -> data_genericgraph
 data_genericgraph_GraphElem__V__E__ -> data_genericgraph
-data_genericgraph_GVertex__V__ -> data_genericgraph
-data_genericgraph_GEdge__V__E__ -> data_genericgraph
 data_genericgraph_Vertex__T__ -> data_genericgraph
 data_genericgraph_Edge__V__E__ -> data_genericgraph
+data_genericgraph_GVertex__V__ -> data_genericgraph
+data_genericgraph_GEdge__V__E__ -> data_genericgraph
+data_genericgraph_Vertex__V__ -> data_genericgraph
+data_genericgraph_Direction -> data_genericgraph
+data_genericgraph_None -> data_genericgraph
+data_genericgraph_L2R -> data_genericgraph
+data_genericgraph_R2L -> data_genericgraph
+data_genericgraph_Both -> data_genericgraph
 data_classdiagram_CDGraph -> data_classdiagram_Graph__CDNode__CDEdge__
 data_classdiagram_CDElem -> data_classdiagram_GraphElem__CDNode__CDEdge__
 data_classdiagram_Package -> data_classdiagram_CDNode

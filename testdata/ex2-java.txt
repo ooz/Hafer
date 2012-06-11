@@ -24,6 +24,32 @@ public class GraphElem<V, E> {
 
 package data.genericgraph;
 
+public class Vertex<T> {
+
+
+}
+
+package data.genericgraph;
+
+public class Edge<V, E> {
+
+
+    public E get() {
+    }
+
+    public Direction direction() {
+    }
+
+    public Vertex<V> left() {
+    }
+
+    public Vertex<V> right() {
+    }
+
+}
+
+package data.genericgraph;
+
 public class GVertex<V> extends GraphElem<V, E> {
 
 
@@ -38,30 +64,46 @@ public class GEdge<V, E> extends GraphElem<V, E> {
 
 package data.genericgraph;
 
-public class Vertex<T> {
+public class Vertex<V> {
 
 
-    public T get() {
-    }
-
-    public List<Vertex<V>> children() {
+    public V get() {
     }
 
 }
 
 package data.genericgraph;
 
-public class Edge<V, E> {
+public class Direction {
 
 
-    public E get() {
-    }
+}
 
-    public Vertex<V> left() {
-    }
+package data.genericgraph;
 
-    public Vertex<V> right() {
-    }
+public class None extends Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class L2R extends Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class R2L extends Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class Both extends Direction {
+
 
 }
 
