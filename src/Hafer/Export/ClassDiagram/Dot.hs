@@ -60,7 +60,7 @@ testConvertNode = convertVertex (Name "") testGraph $ Vertex testClass
 -- ##########################################################################
 
 exprt :: CDGraph -> String
-exprt g = exprt g
+exprt g = export g
 
 export :: CDGraph -> String
 export g = let vs = vertices g
