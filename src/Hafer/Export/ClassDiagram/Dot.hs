@@ -41,8 +41,8 @@ _EDGE_CONFIG = "edge [\
 \ ]"
 
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" ]"
-_EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" ]"
-_EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" ]"
+_EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" dir=both ]"
+_EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" dir=both ]"
 
 
 
