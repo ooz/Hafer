@@ -3,7 +3,8 @@
 module Hafer.Export.ClassDiagram.Dot 
 --( ExportMethod
 --, exprt
-( export
+( exprt
+, export
 ) where
 
 import Data.List (find)
@@ -16,7 +17,7 @@ import Hafer.Export.Common.Dot ( cGRAPH_START
                                , escapeChar
                                , escapeReserved
                                )
-import Hafer.Export.ExportMethod
+-- import Hafer.Export.ExportMethod
 import Hafer.Data.ClassDiagram
 
 -- instance ExportMethod CDGraph String where
@@ -57,6 +58,9 @@ testConvertNode = convertVertex (Name "") testGraph $ Vertex testClass
 -- ##########################################################################
 -- # Export
 -- ##########################################################################
+
+exprt :: CDGraph -> String
+exprt g = exprt g
 
 export :: CDGraph -> String
 export g = let vs = vertices g

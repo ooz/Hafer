@@ -1,6 +1,6 @@
 {-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
 module Hafer.Export.Graph.Dot
-( ExportMethod
+( exprt
 , export
 ) where
 
@@ -9,7 +9,7 @@ import Hafer.Export.Common.Dot ( cGRAPH_START
                                , cGENERAL_CONFIG
                                , escape
                                )
-import Hafer.Export.ExportMethod
+-- import Hafer.Export.ExportMethod
 import Hafer.Data.GenericGraph
 
 -- ##########################################################################
@@ -27,6 +27,10 @@ _EDGE_CONFIG = "edge [\
 \ fontname = \"Bitstream Vera Sans\"\
 \ fontsize = 8\
 \ ]"
+
+exprt :: (Format v, Format e) => 
+         (Graph v e) -> String
+exprt g = export g
 
 export :: (Format v, Format e) => 
           (Graph v e) -> String

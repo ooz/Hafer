@@ -22,8 +22,8 @@ main :: IO ()
 main = do [options, inFile] <- getArgs;
           input  <- readFile inFile;
           case input of
-              _ | (isInfixOf "--graph" options)    -> putStr $ G2Dot.export ((I.imprt input) :: CDGraph)
-              _ | (isInfixOf "--classdiagram"   options)    -> putStr $ CD2Dot.export ((I.imprt input) :: CDGraph)
-              _ | (isInfixOf "--java"   options)    -> putStr $ CD2Java.export ((I.imprt input) :: CDGraph)
+              _ | (isInfixOf "--graph" options)    -> putStr $ G2Dot.exprt ((I.imprt input) :: CDGraph)
+              _ | (isInfixOf "--classdiagram"   options)    -> putStr $ CD2Dot.exprt ((I.imprt input) :: CDGraph)
+              _ | (isInfixOf "--java"   options)    -> putStr $ CD2Java.exprt ((I.imprt input) :: CDGraph)
               _ | (isInfixOf "--coupling" options) -> putStr $ (show ((CDMCoup.evaluate ((I.imprt input) :: CDGraph)) :: Int)) ++ "\n"
 

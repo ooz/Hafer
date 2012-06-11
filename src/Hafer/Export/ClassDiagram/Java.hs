@@ -1,12 +1,16 @@
 {-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
 
 module Hafer.Export.ClassDiagram.Java 
-( export
+( exprt
+, export
 ) where
 
 import Data.List (find)
 
 import Hafer.Data.ClassDiagram
+
+exprt :: CDGraph -> String
+exprt g = export g
 
 export :: CDGraph -> String
 export g = let 
