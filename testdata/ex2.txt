@@ -26,14 +26,26 @@ data.genericgraph:
              ; +vertices(): List<Vertex<V>>
              ; +edges()   : List<Edge<E>>]
 
-[GraphElem<V, E>]^-[GVertex<V>]
-[GraphElem<V, E>]^-[GEdge<V, E>]
+[Graph<V, E>]++-->[GraphElem<V, E>]
+[Graph<V, E>]++-->[Vertex<T>]
+[Graph<V, E>]++-->[Edge<V, E>]
 
-[Vertex<T>  | +get() : T
-            ; +children() : List<Vertex<V>>]
-[Edge<V, E> | +get()  : E
+[GraphElem<V, E>]^--[GVertex<V>]
+[GraphElem<V, E>]^--[GEdge<V, E>]
+
+[Vertex<V>  | +get() : V]
+[Edge<V, E> | +get() : E
+            ; +direction(): Direction
             ; +left() : Vertex<V>
             ; +right(): Vertex<V>]
+
+[GVertex<V>]<>-->1[Vertex<V>]
+[GEdge<V, E>]<>->1[Edge<V, E>]
+
+[Direction]^--[None]
+[Direction]^--[L2R]
+[Direction]^--[R2L]
+[Direction]^--[Both]
 
 
 data.classdiagram:
