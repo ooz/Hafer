@@ -3,7 +3,8 @@
 module Hafer.Export.ClassDiagram.DotHTML
 --( ExportMethod
 --, exprt
-( export
+( exprt
+, export
 ) where
 
 import Data.List (find)
@@ -16,7 +17,7 @@ import Hafer.Export.Common.Dot ( cGRAPH_START
                                , escapeChar
                                , escapeReserved
                                )
-import Hafer.Export.ExportMethod
+-- import Hafer.Export.ExportMethod
 import Hafer.Data.ClassDiagram
 
 -- instance ExportMethod CDGraph String where
@@ -40,8 +41,8 @@ _EDGE_CONFIG = "edge [\
 \ ]"
 
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" ]"
-_EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" ]"
-_EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" ]"
+_EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" dir=both ]"
+_EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" dir=both ]"
 
 
 
@@ -57,6 +58,9 @@ testConvertNode = convertVertex (Name "") testGraph $ Vertex testClass
 -- ##########################################################################
 -- # Export
 -- ##########################################################################
+
+exprt :: CDGraph -> String
+exprt g = export g
 
 export :: CDGraph -> String
 export g = let vs = vertices g
