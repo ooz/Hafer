@@ -1,6 +1,6 @@
 {-# LANGUAGE TypeSynonymInstances, MultiParamTypeClasses #-}
 
-module Hafer.Export.ClassDiagram.Dot 
+module Hafer.Export.ClassDiagram.DotHTML
 --( ExportMethod
 --, exprt
 ( export

@@ -12,7 +12,7 @@ import Data.Maybe
 import Hafer.Data.ClassDiagram
 import qualified Hafer.Import.ClassDiagram.ClassDiagramParser as I
 
-import qualified Hafer.Export.ClassDiagram.Dot as CD2Dot
+import qualified Hafer.Export.ClassDiagram.DotHTML as CD2Dot
 import qualified Hafer.Export.ClassDiagram.Java as CD2Java
 import qualified Hafer.Export.Graph.Dot as G2Dot
 
