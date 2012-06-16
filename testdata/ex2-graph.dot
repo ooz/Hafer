@@ -1,5 +1,5 @@
 digraph G {
-fontname = "Bitstream Vera Sans"; rankdir = "TD"; fontsize = 8;
+fontname = "Bitstream Vera Sans"; rankdir = "RL"; fontsize = 8;
 node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "circle" ]
 edge [ arrowhead = "normal" fontname = "Bitstream Vera Sans" fontsize = 8 ]
 data_genericgraph [ label = "data.genericgraph" ]
