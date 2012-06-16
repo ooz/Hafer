@@ -8,6 +8,7 @@ module Hafer.Export.ClassDiagram.DotHTML
 ) where
 
 import Data.List (find)
+import Data.String.Utils (replace)
 
 import Hafer.Export.Common.Dot ( cGRAPH_START
                                , cGRAPH_END
@@ -32,7 +33,7 @@ import Hafer.Data.ClassDiagram
 _NODE_CONFIG = "node [\
 \ fontname = \"Bitstream Vera Sans\"\
 \ fontsize = 8\
-\ shape = \"record\"\
+\ shape = \"none\"\
 \ ]"
 
 _EDGE_CONFIG = "edge [\
@@ -129,31 +130,32 @@ convertVertex quali g v = case v of
                 ++  "}"
     Vertex (Class name fields methods) -> 
         let name' = format name
-            nameLabel = format $ unjoin quali name
+            nameLabel     = format $ unjoin quali name
+            nameLabelHTML = replace "\\<" "&lt;" $ replace "\\>" "&gt;" nameLabel
         in 
-            (escape name') ++ " [ label = \"{" 
-                           ++ nameLabel
+            (escape name') ++ " [ label = <<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">" 
+                           ++ "<TR><TD>" ++ nameLabelHTML ++ "</TD></TR>"
                            ++ (addFields fields) 
                            ++ (addMethods methods) 
-                           ++ "}\" ]"  
+                           ++ "</TABLE>> ]"  
     _ -> ""
 
 addFields :: [Field] -> String
 addFields l = case l of 
-    a:as -> "|" ++ convertFields l
+    a:as -> "<TR><TD BALIGN=\"LEFT\">" ++ (convertFields l) ++ "</TD></TR>"
     []   -> ""
 convertFields :: [Field] -> String
 convertFields fields = case fields of
     (Field v name t):fs -> (convertVisibility v) 
                            ++ name 
                            ++ (convertOptType t) 
-                           ++ "\\l" 
+                           ++ "<BR/>" 
                            ++ convertFields fs
     []   -> ""
 
 addMethods :: [Method] -> String
 addMethods l = case l of 
-    a:as -> "|" ++ convertMethods l
+    a:as -> "<TR><TD BALIGN=\"LEFT\">" ++ (convertMethods l) ++ "</TD></TR>"
     []   -> ""
 convertMethods :: [Method] -> String
 convertMethods methods = case methods of
@@ -161,7 +163,7 @@ convertMethods methods = case methods of
                                    ++ name 
                                    ++ "(" ++ (convertParams params) ++ ")"
                                    ++ (convertOptType t)
-                                   ++ "\\l"
+                                   ++ "<BR/>"
                                    ++ convertMethods ms
     []   -> ""
 
@@ -180,7 +182,7 @@ convertOptType t = case t of
 convertType :: Type -> String
 convertType t = case t of
     Type name               -> name
-    PolymorphicType name ts -> name ++ "\\<" ++ convertTypes ts ++ "\\>"
+    PolymorphicType name ts -> name ++ "&lt;" ++ convertTypes ts ++ "&gt;"
     _ -> ""
 
 convertTypes :: [Type] -> String
