@@ -134,7 +134,7 @@ convertVertex quali g v = case v of
             nameLabelHTML = replace "\\<" "&lt;" $ replace "\\>" "&gt;" nameLabel
         in 
             (escape name') ++ " [ label = <<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\">" 
-                           ++ "<TR><TD>" ++ nameLabelHTML ++ "</TD></TR>"
+                           ++ "<TR><TD PORT=\"p\">" ++ nameLabelHTML ++ "</TD></TR>"
                            ++ (addFields fields) 
                            ++ (addMethods methods) 
                            ++ "</TABLE>> ]"  
@@ -216,8 +216,8 @@ convertEdgeType a = case a of
     Composition _ -> _EDGE_COMPOSITION_CONFIG
 
 convertArrow :: Direction -> Vertex CDNode -> Vertex CDNode -> String
-convertArrow d l r = let l' = escape (extractNodeName l)
-                         r' = escape (extractNodeName r)
+convertArrow d l r = let l' = (escape (extractNodeName l)) ++ ":p"
+                         r' = (escape (extractNodeName r)) ++ ":p"
                      in case d of
                         L2R -> l' ++ " -> " ++ r'
                         R2L -> r' ++ " -> " ++ l'
