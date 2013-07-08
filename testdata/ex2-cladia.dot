@@ -3,13 +3,13 @@ fontname = "Bitstream Vera Sans"; rankdir = "RL"; fontsize = 8;
 node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "none" ]
 edge [ fontname = "Bitstream Vera Sans" fontsize = 8 ]
 subgraph clusterdata_genericgraph { label = "data.genericgraph"
-data_genericgraph_Graph__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Graph&lt;V, E&gt;</TD></TR><TR><TD BALIGN="LEFT">+ elems() : List&lt;GraphElem&lt;V, E&gt;&gt;<BR/>+ vertices() : List&lt;Vertex&lt;V&gt;&gt;<BR/>+ edges() : List&lt;Edge&lt;E&gt;&gt;<BR/></TD></TR></TABLE>> ]
+data_genericgraph_Graph__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Graph&lt;V, E&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ elems() : List&lt;GraphElem&lt;V, E&gt;&gt;<BR/>+ vertices() : List&lt;Vertex&lt;V&gt;&gt;<BR/>+ edges() : List&lt;Edge&lt;E&gt;&gt;<BR/></TD></TR></TABLE>> ]
 data_genericgraph_GraphElem__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GraphElem&lt;V, E&gt;</TD></TR></TABLE>> ]
 data_genericgraph_Vertex__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Vertex&lt;T&gt;</TD></TR></TABLE>> ]
-data_genericgraph_Edge__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Edge&lt;V, E&gt;</TD></TR><TR><TD BALIGN="LEFT">+ get() : E<BR/>+ direction() : Direction<BR/>+ left() : Vertex&lt;V&gt;<BR/>+ right() : Vertex&lt;V&gt;<BR/></TD></TR></TABLE>> ]
+data_genericgraph_Edge__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Edge&lt;V, E&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ get() : E<BR/>+ direction() : Direction<BR/>+ left() : Vertex&lt;V&gt;<BR/>+ right() : Vertex&lt;V&gt;<BR/></TD></TR></TABLE>> ]
 data_genericgraph_GVertex__V__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GVertex&lt;V&gt;</TD></TR></TABLE>> ]
 data_genericgraph_GEdge__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GEdge&lt;V, E&gt;</TD></TR></TABLE>> ]
-data_genericgraph_Vertex__V__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Vertex&lt;V&gt;</TD></TR><TR><TD BALIGN="LEFT">+ get() : V<BR/></TD></TR></TABLE>> ]
+data_genericgraph_Vertex__V__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Vertex&lt;V&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ get() : V<BR/></TD></TR></TABLE>> ]
 data_genericgraph_Direction [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Direction</TD></TR></TABLE>> ]
 data_genericgraph_None [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">None</TD></TR></TABLE>> ]
 data_genericgraph_L2R [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">L2R</TD></TR></TABLE>> ]
@@ -22,47 +22,47 @@ data_classdiagram_CDGraph [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACIN
 data_classdiagram_GraphElem__CDNode__CDEdge__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GraphElem&lt;CDNode, CDEdge&gt;</TD></TR></TABLE>> ]
 data_classdiagram_CDElem [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDElem</TD></TR></TABLE>> ]
 data_classdiagram_CDNode [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDNode</TD></TR></TABLE>> ]
-data_classdiagram_Package [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Package</TD></TR><TR><TD BALIGN="LEFT">+ name() : Name<BR/></TD></TR></TABLE>> ]
-data_classdiagram_Interface [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Interface</TD></TR><TR><TD BALIGN="LEFT">+ name() : Type<BR/>+ methods() : List&lt;Method&gt;<BR/></TD></TR></TABLE>> ]
-data_classdiagram_Class [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Class</TD></TR><TR><TD BALIGN="LEFT">+ fields() : List&lt;Field&gt;<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Package [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Package</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Name<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Interface [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Interface</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Type<BR/>+ methods() : List&lt;Method&gt;<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Class [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Class</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ fields() : List&lt;Field&gt;<BR/></TD></TR></TABLE>> ]
 data_classdiagram_Note [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Note</TD></TR></TABLE>> ]
 data_classdiagram_CDEdge [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDEdge</TD></TR></TABLE>> ]
 data_classdiagram_Association [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Association</TD></TR></TABLE>> ]
 data_classdiagram_Aggregation [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Aggregation</TD></TR></TABLE>> ]
 data_classdiagram_Composition [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Composition</TD></TR></TABLE>> ]
 data_classdiagram_Inheritance [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Inheritance</TD></TR></TABLE>> ]
-data_classdiagram_Field [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Field</TD></TR><TR><TD BALIGN="LEFT">+ visibility() : Visibility<BR/>+ name() : Name<BR/>+ type() : Type<BR/></TD></TR></TABLE>> ]
-data_classdiagram_Method [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Method</TD></TR><TR><TD BALIGN="LEFT">+ param() : List&lt;Param&gt;<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Field [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Field</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ visibility() : Visibility<BR/>+ name() : Name<BR/>+ type() : Type<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Method [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Method</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ param() : List&lt;Param&gt;<BR/></TD></TR></TABLE>> ]
 data_classdiagram_Visibility [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Visibility</TD></TR></TABLE>> ]
 data_classdiagram_VisDefault [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisDefault</TD></TR></TABLE>> ]
 data_classdiagram_VisPrivate [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisPrivate</TD></TR></TABLE>> ]
 data_classdiagram_VisPackage [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisPackage</TD></TR></TABLE>> ]
 data_classdiagram_VisPublic [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisPublic</TD></TR></TABLE>> ]
-data_classdiagram_Param [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Param</TD></TR><TR><TD BALIGN="LEFT">+ name() : Name<BR/>+ type() : Type<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Param [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Param</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Name<BR/>+ type() : Type<BR/></TD></TR></TABLE>> ]
 data_classdiagram_String [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">String</TD></TR></TABLE>> ]
 data_classdiagram_Name [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Name</TD></TR></TABLE>> ]
 data_classdiagram_Type [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Type</TD></TR></TABLE>> ]
-data_classdiagram_Simple [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Simple</TD></TR><TR><TD BALIGN="LEFT">+ name() : Name<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Simple [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Simple</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Name<BR/></TD></TR></TABLE>> ]
 data_classdiagram_Generic [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Generic</TD></TR></TABLE>> ]
 }
 subgraph clusterdata_erdiagram { label = "data.erdiagram"
 }
 subgraph clusterimport { label = "import"
-import_ImportModule__I__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;I, G&gt;</TD></TR><TR><TD BALIGN="LEFT">+ imprt(inputI) : G<BR/></TD></TR></TABLE>> ]
+import_ImportModule__I__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;I, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(inputI) : G<BR/></TD></TR></TABLE>> ]
 }
 subgraph clusterimport_classdiagram { label = "import.classdiagram"
 import_classdiagram_ImportModule__String__CDGraph__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;String, CDGraph&gt;</TD></TR></TABLE>> ]
-import_classdiagram_ClassDiagramParser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ClassDiagramParser</TD></TR><TR><TD BALIGN="LEFT">+ imprt(inputString) : CDGraph<BR/></TD></TR></TABLE>> ]
+import_classdiagram_ClassDiagramParser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ClassDiagramParser</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(inputString) : CDGraph<BR/></TD></TR></TABLE>> ]
 }
 subgraph clusterparser { label = "parser"
-parser_ParserFascade__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ParserFascade&lt;T&gt;</TD></TR><TR><TD BALIGN="LEFT">+ parse(pParser&lt;T&gt;, inString) : T<BR/>+ parsers() : Map&lt;String, Parser&lt;T&gt;&gt;<BR/></TD></TR></TABLE>> ]
+parser_ParserFascade__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ParserFascade&lt;T&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ parse(pParser&lt;T&gt;, inString) : T<BR/>+ parsers() : Map&lt;String, Parser&lt;T&gt;&gt;<BR/></TD></TR></TABLE>> ]
 parser_Parser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Parser</TD></TR></TABLE>> ]
 parser_Parsec [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Parsec</TD></TR></TABLE>> ]
 parser_text_parsec_language_LanguageDef [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">text.parsec.language.LanguageDef</TD></TR></TABLE>> ]
 parser_DiagramDef [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">DiagramDef</TD></TR></TABLE>> ]
 }
 subgraph clusterexport { label = "export"
-export_ExportModule__G__O__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, O&gt;</TD></TR><TR><TD BALIGN="LEFT">+ exprt(graphG) : O<BR/></TD></TR></TABLE>> ]
+export_ExportModule__G__O__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, O&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ exprt(graphG) : O<BR/></TD></TR></TABLE>> ]
 }
 subgraph clusterexport_codegenerator { label = "export.codegenerator"
 export_codegenerator_ExportModule__G__String__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, String&gt;</TD></TR></TABLE>> ]
@@ -77,7 +77,7 @@ export_classdiagram_ExportModule__G__IOAction__ [ label = <<TABLE BORDER="0" CEL
 export_classdiagram_ProjektCodeGenerator__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ProjektCodeGenerator&lt;G&gt;</TD></TR></TABLE>> ]
 }
 subgraph clustermetric { label = "metric"
-metric_Metric__M__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Metric&lt;M, G&gt;</TD></TR><TR><TD BALIGN="LEFT">+ evaluate(graphG) : M<BR/></TD></TR></TABLE>> ]
+metric_Metric__M__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Metric&lt;M, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ evaluate(graphG) : M<BR/></TD></TR></TABLE>> ]
 metric_GenericMetric__M__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GenericMetric&lt;M&gt;</TD></TR></TABLE>> ]
 metric_GenericMetric__int__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GenericMetric&lt;int&gt;</TD></TR></TABLE>> ]
 metric_MaxDegreeMetric [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">MaxDegreeMetric</TD></TR></TABLE>> ]

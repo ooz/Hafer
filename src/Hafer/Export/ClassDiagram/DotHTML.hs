@@ -142,7 +142,7 @@ convertVertex quali g v = case v of
 
 addFields :: [Field] -> String
 addFields l = case l of 
-    a:as -> "<TR><TD BALIGN=\"LEFT\">" ++ (convertFields l) ++ "</TD></TR>"
+    a:as -> "<TR><TD ALIGN=\"LEFT\" BALIGN=\"LEFT\">" ++ (convertFields l) ++ "</TD></TR>"
     []   -> ""
 convertFields :: [Field] -> String
 convertFields fields = case fields of
@@ -155,7 +155,7 @@ convertFields fields = case fields of
 
 addMethods :: [Method] -> String
 addMethods l = case l of 
-    a:as -> "<TR><TD BALIGN=\"LEFT\">" ++ (convertMethods l) ++ "</TD></TR>"
+    a:as -> "<TR><TD ALIGN=\"LEFT\" BALIGN=\"LEFT\">" ++ (convertMethods l) ++ "</TD></TR>"
     []   -> ""
 convertMethods :: [Method] -> String
 convertMethods methods = case methods of
