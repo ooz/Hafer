@@ -155,7 +155,7 @@ typ :: Parser Char Type
 typ = try (do tBase   <- name;
               expect  '<';
               tParams <- sepEndBy typ comma;
-              expect  '>';
+              white $ expect '>';
               return $ PolymorphicType tBase tParams)
   <|> do t <- name;
          return $ Type t
