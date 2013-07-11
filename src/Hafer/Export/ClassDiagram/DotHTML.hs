@@ -30,6 +30,8 @@ import Hafer.Data.ClassDiagram
 -- # Additional boilerplate
 -- ##########################################################################
 
+_SPLINE_CONFIG = "splines = \"polyline\";" -- \"ortho\"
+
 _NODE_CONFIG = "node [\
 \ fontname = \"Bitstream Vera Sans\"\
 \ fontsize = 8\
@@ -42,6 +44,7 @@ _EDGE_CONFIG = "edge [\
 \ ]"
 
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" ]"
+_EDGE_ASSOCIATION_CONFIG = "edge [ arrowhead = \"none\" arrowtail = \"none\" dir=both ]"
 _EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" dir=both ]"
 _EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" dir=both ]"
 
@@ -89,6 +92,7 @@ export g = let vs = vertices g
            in
                 cGRAPH_START ++ "\n"
                 ++ cGENERAL_CONFIG ++ "\n"
+                ++ _SPLINE_CONFIG ++ "\n"
                 ++ _NODE_CONFIG ++ "\n"
                 ++ _EDGE_CONFIG ++ "\n"
                 ++ (foldr (++) 
@@ -212,6 +216,7 @@ convertEdge e = case e of
 convertEdgeType :: CDAssoc -> String
 convertEdgeType a = case a of
     Extend -> _EDGE_EXTEND_CONFIG
+    Association _ -> _EDGE_ASSOCIATION_CONFIG
     Aggregation _ -> _EDGE_AGGREGATION_CONFIG
     Composition _ -> _EDGE_COMPOSITION_CONFIG
 

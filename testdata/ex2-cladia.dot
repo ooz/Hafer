@@ -1,5 +1,6 @@
 digraph G {
 fontname = "Bitstream Vera Sans"; rankdir = "RL"; fontsize = 8;
+splines = "polyline";
 node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "none" ]
 edge [ fontname = "Bitstream Vera Sans" fontsize = 8 ]
 subgraph clusterdata_genericgraph { label = "data.genericgraph"
