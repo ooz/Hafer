@@ -2,7 +2,7 @@ digraph G {
 fontname = "Bitstream Vera Sans"; rankdir = "RL"; fontsize = 8;
 splines = "polyline";
 node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "none" ]
-edge [ fontname = "Bitstream Vera Sans" fontsize = 8 ]
+edge [ fontname = "Bitstream Vera Sans" fontsize = 8 labeldistance = 1.5 ]
 subgraph clusterdata_genericgraph { label = "data.genericgraph"
 data_genericgraph_Graph__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Graph&lt;V, E&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ elems() : List&lt;GraphElem&lt;V, E&gt;&gt;<BR/>+ vertices() : List&lt;Vertex&lt;V&gt;&gt;<BR/>+ edges() : List&lt;Edge&lt;E&gt;&gt;<BR/></TD></TR></TABLE>> ]
 data_genericgraph_GraphElem__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GraphElem&lt;V, E&gt;</TD></TR></TABLE>> ]
@@ -102,9 +102,9 @@ edge [ arrowhead = "empty" arrowtail = "none" ]
 data_genericgraph_GVertex__V__:p -> data_genericgraph_GraphElem__V__E__:p
 edge [ arrowhead = "empty" arrowtail = "none" ]
 data_genericgraph_GEdge__V__E__:p -> data_genericgraph_GraphElem__V__E__:p
-edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both ]
+edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" ]
 data_genericgraph_GVertex__V__:p -> data_genericgraph_Vertex__V__:p
-edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both ]
+edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" ]
 data_genericgraph_GEdge__V__E__:p -> data_genericgraph_Edge__V__E__:p
 edge [ arrowhead = "empty" arrowtail = "none" ]
 data_genericgraph_None:p -> data_genericgraph_Direction:p

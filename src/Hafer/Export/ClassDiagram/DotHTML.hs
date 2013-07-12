@@ -41,12 +41,14 @@ _NODE_CONFIG = "node [\
 _EDGE_CONFIG = "edge [\
 \ fontname = \"Bitstream Vera Sans\"\
 \ fontsize = 8\
+\ labeldistance = 1.5\
 \ ]"
 
 _EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" ]"
-_EDGE_ASSOCIATION_CONFIG = "edge [ arrowhead = \"none\" arrowtail = \"none\" dir=both ]"
-_EDGE_AGGREGATION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" dir=both ]"
-_EDGE_COMPOSITION_CONFIG = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" dir=both ]"
+_EDGE_ASSOCIATION_CONFIG_START = "edge [ arrowhead = \"none\" arrowtail = \"none\" dir=both"
+_EDGE_AGGREGATION_CONFIG_START = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" dir=both"
+_EDGE_COMPOSITION_CONFIG_START = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" dir=both"
+_EDGE_CONFIG_END = " ]"
 
 
 
@@ -210,15 +212,15 @@ convertParam (n,t) = n ++ convertType t
 
 convertEdge :: Edge CDNode CDAssoc -> String
 convertEdge e = case e of
-    Edge assoc dir l r -> (convertEdgeType assoc) ++ "\n"
+    Edge assoc dir l r -> (convertEdgeType assoc dir) ++ "\n"
                           ++ (convertArrow dir l r)
 
-convertEdgeType :: CDAssoc -> String
-convertEdgeType a = case a of
+convertEdgeType :: CDAssoc -> Direction -> String
+convertEdgeType a d = case a of
     Extend -> _EDGE_EXTEND_CONFIG
-    Association _ -> _EDGE_ASSOCIATION_CONFIG
-    Aggregation _ -> _EDGE_AGGREGATION_CONFIG
-    Composition _ -> _EDGE_COMPOSITION_CONFIG
+    Association props -> _EDGE_ASSOCIATION_CONFIG_START ++ convertAssocProps d props ++ _EDGE_CONFIG_END
+    Aggregation props -> _EDGE_AGGREGATION_CONFIG_START ++ convertAssocProps d props ++ _EDGE_CONFIG_END 
+    Composition props -> _EDGE_COMPOSITION_CONFIG_START ++ convertAssocProps d props ++ _EDGE_CONFIG_END
 
 convertArrow :: Direction -> Vertex CDNode -> Vertex CDNode -> String
 convertArrow d l r = let l' = (escape (extractNodeName l)) ++ ":p"
@@ -227,6 +229,36 @@ convertArrow d l r = let l' = (escape (extractNodeName l)) ++ ":p"
                         L2R -> l' ++ " -> " ++ r'
                         R2L -> r' ++ " -> " ++ l'
                         _   -> l' ++ " -> " ++ r'
+
+convertAssocProps :: Direction -> [AssocProp] -> String
+convertAssocProps d ps = case ps of
+    p:ps' -> convertAssocProp d p ++ convertAssocProps d ps'
+    []    -> ""
+
+
+convertAssocProp :: Direction -> AssocProp -> String
+convertAssocProp d@(L2R) p@(LeftEnd  label card) = " taillabel = \"" ++ convertLabelCard label card ++"\""
+convertAssocProp d@(R2L) p@(LeftEnd  label card) = " headlabel = \"" ++ convertLabelCard label card ++"\""
+convertAssocProp d@(_)   p@(LeftEnd  label card) = " taillabel = \"" ++ convertLabelCard label card ++"\""
+convertAssocProp d@(L2R) p@(RightEnd label card) = " headlabel = \"" ++ convertLabelCard label card ++"\""
+convertAssocProp d@(R2L) p@(RightEnd label card) = " taillabel = \"" ++ convertLabelCard label card ++"\""
+convertAssocProp d@(_)   p@(RightEnd label card) = " headlabel = \"" ++ convertLabelCard label card ++"\""
+convertAssocProp d@(_)   p@(Center   label)      = " label = \"" ++ label ++"\""
+
+convertLabelCard :: String -> Cardinality -> String
+convertLabelCard l c = case l of
+    "" -> convertCardinality c
+    _  -> case convertCardinality c of 
+            ""  -> l
+            str -> str ++ " " ++ l
+
+convertCardinality :: Cardinality -> String
+convertCardinality c = case c of
+    CustomCard str -> str
+    ZeroOneCard    -> "0..1"
+    ZeroManyCard   -> "0..*"
+    OneCard        -> "1"
+    OneManyCard    -> "1..*" 
 
 extractNodeName :: Vertex CDNode -> String
 extractNodeName (Vertex n) = format n
