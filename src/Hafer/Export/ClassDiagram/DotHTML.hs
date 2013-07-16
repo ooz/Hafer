@@ -7,7 +7,7 @@ module Hafer.Export.ClassDiagram.DotHTML
 , export
 ) where
 
-import Data.List (find)
+import Data.List (find, isInfixOf)
 import Data.String.Utils (replace)
 
 import Hafer.Export.Common.Dot ( cGRAPH_START
@@ -44,7 +44,7 @@ _EDGE_CONFIG = "edge [\
 \ labeldistance = 1.5\
 \ ]"
 
-_EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" ]"
+_EDGE_EXTEND_CONFIG = "edge [ arrowhead = \"empty\" arrowtail = \"none\" taillabel=\"\" headlabel=\"\" label=\"\" ]"
 _EDGE_ASSOCIATION_CONFIG_START = "edge [ arrowhead = \"none\" arrowtail = \"none\" dir=both"
 _EDGE_AGGREGATION_CONFIG_START = "edge [ arrowhead = \"vee\" arrowtail = \"odiamond\" dir=both"
 _EDGE_COMPOSITION_CONFIG_START = "edge [ arrowhead = \"vee\" arrowtail = \"diamond\" dir=both"
@@ -218,9 +218,9 @@ convertEdge e = case e of
 convertEdgeType :: CDAssoc -> Direction -> String
 convertEdgeType a d = case a of
     Extend -> _EDGE_EXTEND_CONFIG
-    Association props -> _EDGE_ASSOCIATION_CONFIG_START ++ convertAssocProps d props ++ _EDGE_CONFIG_END
-    Aggregation props -> _EDGE_AGGREGATION_CONFIG_START ++ convertAssocProps d props ++ _EDGE_CONFIG_END 
-    Composition props -> _EDGE_COMPOSITION_CONFIG_START ++ convertAssocProps d props ++ _EDGE_CONFIG_END
+    Association props -> _EDGE_ASSOCIATION_CONFIG_START ++ addMissingProps (convertAssocProps d props) ++ _EDGE_CONFIG_END
+    Aggregation props -> _EDGE_AGGREGATION_CONFIG_START ++ addMissingProps (convertAssocProps d props) ++ _EDGE_CONFIG_END 
+    Composition props -> _EDGE_COMPOSITION_CONFIG_START ++ addMissingProps (convertAssocProps d props) ++ _EDGE_CONFIG_END
 
 convertArrow :: Direction -> Vertex CDNode -> Vertex CDNode -> String
 convertArrow d l r = let l' = (escape (extractNodeName l)) ++ ":p"
@@ -229,6 +229,15 @@ convertArrow d l r = let l' = (escape (extractNodeName l)) ++ ":p"
                         L2R -> l' ++ " -> " ++ r'
                         R2L -> r' ++ " -> " ++ l'
                         _   -> l' ++ " -> " ++ r'
+
+addMissingProps :: String -> String
+addMissingProps str = case (isInfixOf "taillabel" str) of
+    False -> addMissingProps $ str ++ " taillabel = \"\""
+    True  -> case (isInfixOf "headlabel" str) of
+              False -> addMissingProps $ str ++ " headlabel = \"\""
+              True  -> case (isInfixOf " label " str) of
+                        False -> addMissingProps $ str ++ " label = \"\""
+                        True  -> str
 
 convertAssocProps :: Direction -> [AssocProp] -> String
 convertAssocProps d ps = case ps of
