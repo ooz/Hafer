@@ -199,24 +199,79 @@ assoc :: Parser Char (CDAssoc, Direction)
 assoc = try (extend)
     <|> cardLabeledAssoc
 
-cardLabeledAssoc :: Parser Char (CDAssoc, Direction)
-cardLabeledAssoc = try (plainAssoc)
-               <|> try (composition)
-               <|> aggregation
+dashes :: Parser Char [Char]
+dashes = many1 $ expect '-'
 
 extend :: Parser Char (CDAssoc, Direction)
 extend = do expect '^';
-            many1 $ expect '-';
+            dashes;
             return $ (Extend, R2L)
-     <|> do many1 $ expect '-';
+     <|> do dashes;
             expect '^';
             return $ (Extend, L2R)
 
+cardLabeledAssoc :: Parser Char (CDAssoc, Direction)
+cardLabeledAssoc = try (do mbL <- optionMaybe leftAssocProp;
+                           (assoc, dir) <- leftPropAssoc;
+                           return $ (makeAssocWithProps assoc (eAP mbL), dir))
+               <|> compositionL2R 
+
+leftPropAssoc :: Parser Char (CDAssoc, Direction)
+leftPropAssoc = try (do expect '<';
+                        dashes;
+                        expects "++";
+                        return $ (Composition [], R2L))
+            <|> try (do expect '<';
+                        dashes;
+                        expect '+';
+                        mbR <- optionMaybe rightAssocProp
+                        return $ (Aggregation (eAP mbR), R2L))
+            <|> try (do expect '<';
+                        dashes;
+                        expects "<>";
+                        mbR <- optionMaybe rightAssocProp
+                        return $ (Aggregation (eAP mbR), R2L))
+            <|> try (do expect '<';
+                        dashes;
+                        expect '>'
+                        mbR <- optionMaybe rightAssocProp;
+                        return $ (Association (eAP mbR), Both))
+            <|> try (do expect '<'
+                        dashes;
+                        mbR <- optionMaybe rightAssocProp;
+                        return $ (Association (eAP mbR), R2L))
+            <|> try (do choice $ [expects "<>", expects "+"];
+                        dashes;
+                        expect '>';
+                        mbR <- optionMaybe rightAssocProp;
+                        return $ (Aggregation (eAP mbR), L2R))
+            <|> try (do dashes;
+                        expect '>';
+                        mbR <- optionMaybe rightAssocProp;
+                        return $ (Association (eAP mbR), L2R))
+            <|>      do dashes;
+                        mbR <- optionMaybe rightAssocProp;
+                        return $ (Association (eAP mbR), None)
+
+compositionL2R :: Parser Char (CDAssoc, Direction)
+compositionL2R = do expects "++";
+                    dashes
+                    expect '>';
+                    mbR <- optionMaybe rightAssocProp
+                    return $ (Composition (eAP mbR), L2R)
+
+makeAssocWithProps :: CDAssoc -> [AssocProp] -> CDAssoc
+makeAssocWithProps assoc props = case assoc of
+    Association ps -> Association $ ps ++ props
+    Aggregation ps -> Aggregation $ ps ++ props
+    Composition ps -> Composition $ ps ++ props
+    Extend        -> assoc
+
 cardinality :: Parser Char Cardinality
-cardinality = try (do expect '1';
-                      return $ OneCard)
-          <|> do expects "1..*";
-                 return $ OneManyCard
+cardinality = try (do expects "1..*";
+                      return $ OneManyCard)
+          <|> do expect '1';
+                 return $ OneCard
           <|> try (do expects "0..1";
                       return $ ZeroOneCard)
           <|> do expects "0..*";
@@ -227,21 +282,21 @@ role = name
 
 leftAssocProp :: Parser Char AssocProp
 leftAssocProp = try (do card <- cardinality;
-                        return $ LeftEnd "" card)
+                        labl <- role;
+                        return $ LeftEnd labl card)
             <|> do card <- cardinality;
-                   labl <- role;
-                   return $ LeftEnd labl card
+                   return $ LeftEnd "" card
             <|> try (do labl <- role;
-                        return $ LeftEnd labl (CustomCard ""))
+                        card <- cardinality;
+                        return $ LeftEnd labl card)
             <|> do labl <- role;
-                   card <- cardinality;
-                   return $ LeftEnd labl card
+                   return $ LeftEnd labl (CustomCard "")
 
 rightAssocProp :: Parser Char AssocProp
 rightAssocProp = do prop <- leftAssocProp;
                     case prop of
                         LeftEnd labl card -> return $ RightEnd labl card
-                        _                 -> return $ prop
+                        _                 -> error "Case that should never happen in rightAssocProp" -- return $ prop
 
 centerAssocProp :: Parser Char AssocProp
 centerAssocProp = do labl <- role;
@@ -259,48 +314,3 @@ extractAssocProps mbAPs = foldl (++) [] (map eAP mbAPs)
 -- short hand:
 eAPs = extractAssocProps
 
-plainAssoc :: Parser Char (CDAssoc, Direction)
-plainAssoc = do mbL <- optionMaybe leftAssocProp;
-                (Association _, dir) <- plainAssocWithoutProp
-                mbR <- optionMaybe rightAssocProp;
-                return $ (Association (eAPs [mbL, mbR]), dir)
-
-plainAssocWithoutProp :: Parser Char (CDAssoc, Direction)
-plainAssocWithoutProp = try (do expect '<';
-                                many1 $ expect '-';
-                                return $ (Association [], R2L))
-                    <|> try (do expect '<';
-                                many1 $ expect '-';
-                                expect '>';
-                                return $ (Association [], Both))
-                    <|> try (do many1 $ expect '-';
-                                expect '>';
-                                return $ (Association [], L2R))
-                    <|>      do many1 $ expect '-';
-                                return $ (Association [], None)
-
-composition :: Parser Char (CDAssoc, Direction)
-composition = do expects "++";
-                 many1 $ expect '-';
-                 expect '>';
-                 mbR <- optionMaybe rightAssocProp;
-                 return $ (Composition (eAP mbR), L2R)
-          <|> do mbL <- optionMaybe leftAssocProp;
-                 expect '<';
-                 many1 $ expect '-';
-                 expects "++";
-                 return $ (Composition (eAP mbL), R2L)
-
-aggregation :: Parser Char (CDAssoc, Direction)
-aggregation = do mbL <- optionMaybe leftAssocProp
-                 choice $ [expects "<>", expects "+"];
-                 many1 $ expect '-';
-                 expect '>';
-                 mbR <- optionMaybe rightAssocProp
-                 return $ (Aggregation (eAPs [mbL, mbR]), L2R)
-          <|> do mbL <- optionMaybe leftAssocProp
-                 expect '<';
-                 many1 $ expect '-';
-                 choice $ [expects "<>", expects "+"];
-                 mbR <- optionMaybe rightAssocProp
-                 return $ (Aggregation (eAPs [mbL, mbR]), R2L)
