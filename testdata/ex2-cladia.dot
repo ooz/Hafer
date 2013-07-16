@@ -92,86 +92,86 @@ metric_softwaredesign_CouplingMetric [ label = <<TABLE BORDER="0" CELLBORDER="1"
 }
 subgraph clusterdata_erdiagram { label = "data.erdiagram"
 }
-edge [ arrowhead = "vee" arrowtail = "diamond" dir=both ]
+edge [ arrowhead = "vee" arrowtail = "diamond" dir=both taillabel = "" headlabel = "" label = "" ]
 data_genericgraph_Graph__V__E__:p -> data_genericgraph_GraphElem__V__E__:p
-edge [ arrowhead = "vee" arrowtail = "diamond" dir=both ]
+edge [ arrowhead = "vee" arrowtail = "diamond" dir=both taillabel = "" headlabel = "" label = "" ]
 data_genericgraph_Graph__V__E__:p -> data_genericgraph_Vertex__T__:p
-edge [ arrowhead = "vee" arrowtail = "diamond" dir=both ]
+edge [ arrowhead = "vee" arrowtail = "diamond" dir=both taillabel = "" headlabel = "" label = "" ]
 data_genericgraph_Graph__V__E__:p -> data_genericgraph_Edge__V__E__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_genericgraph_GVertex__V__:p -> data_genericgraph_GraphElem__V__E__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_genericgraph_GEdge__V__E__:p -> data_genericgraph_GraphElem__V__E__:p
-edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" ]
+edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" taillabel = "" label = "" ]
 data_genericgraph_GVertex__V__:p -> data_genericgraph_Vertex__V__:p
-edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" ]
+edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" taillabel = "" label = "" ]
 data_genericgraph_GEdge__V__E__:p -> data_genericgraph_Edge__V__E__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_genericgraph_None:p -> data_genericgraph_Direction:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_genericgraph_L2R:p -> data_genericgraph_Direction:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_genericgraph_R2L:p -> data_genericgraph_Direction:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_genericgraph_Both:p -> data_genericgraph_Direction:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_CDGraph:p -> data_classdiagram_Graph__CDNode__CDEdge__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_CDElem:p -> data_classdiagram_GraphElem__CDNode__CDEdge__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Package:p -> data_classdiagram_CDNode:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Interface:p -> data_classdiagram_CDNode:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Class:p -> data_classdiagram_Interface:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Note:p -> data_classdiagram_CDNode:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Association:p -> data_classdiagram_CDEdge:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Aggregation:p -> data_classdiagram_CDEdge:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Composition:p -> data_classdiagram_CDEdge:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Inheritance:p -> data_classdiagram_CDEdge:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Method:p -> data_classdiagram_Field:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_VisDefault:p -> data_classdiagram_Visibility:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_VisPrivate:p -> data_classdiagram_Visibility:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_VisPackage:p -> data_classdiagram_Visibility:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_VisPublic:p -> data_classdiagram_Visibility:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Name:p -> data_classdiagram_String:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Simple:p -> data_classdiagram_Type:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 data_classdiagram_Generic:p -> data_classdiagram_Type:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 import_classdiagram_ClassDiagramParser:p -> import_classdiagram_ImportModule__String__CDGraph__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 parser_Parsec:p -> parser_Parser:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 parser_DiagramDef:p -> parser_text_parsec_language_LanguageDef:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 export_codegenerator_SimpleCodeGenerator__G__:p -> export_codegenerator_ExportModule__G__String__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 export_codegenerator_ProjektCodeGenerator__G__:p -> export_codegenerator_ExportModule__G__IOAction__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 export_classdiagram_ClassDiagramToDot:p -> export_classdiagram_SimpleCodeGenerator__CDGraph__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 export_classdiagram_ProjektCodeGenerator__G__:p -> export_classdiagram_ExportModule__G__IOAction__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 metric_GenericMetric__M__:p -> metric_Metric__M__G__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 metric_MaxDegreeMetric:p -> metric_GenericMetric__int__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 metric_CycleMetric:p -> metric_GenericMetric__int__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 metric_softwaredesign_SoftwareDesignMetric__M__:p -> metric_softwaredesign_Metric__M__CDGraph__:p
-edge [ arrowhead = "empty" arrowtail = "none" ]
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
 metric_softwaredesign_CouplingMetric:p -> metric_softwaredesign_SoftwareDesignMetric__Float__:p
 }
