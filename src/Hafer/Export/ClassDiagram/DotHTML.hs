@@ -202,7 +202,7 @@ convertParams l = case (map (\a -> convertParam a) l) of
     []   -> ""
 
 convertParam :: Param -> String
-convertParam (n,t) = n ++ convertType t
+convertParam (n,t) = n ++ convertOptType t
 
 
 
