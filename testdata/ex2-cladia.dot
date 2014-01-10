@@ -49,21 +49,21 @@ data_classdiagram_Generic [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACIN
 subgraph clusterdata_erdiagram { label = "data.erdiagram"
 }
 subgraph clusterimport { label = "import"
-import_ImportModule__I__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;I, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(inputI) : G<BR/></TD></TR></TABLE>> ]
+import_ImportModule__I__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;I, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(input : I) : G<BR/></TD></TR></TABLE>> ]
 }
 subgraph clusterimport_classdiagram { label = "import.classdiagram"
 import_classdiagram_ImportModule__String__CDGraph__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;String, CDGraph&gt;</TD></TR></TABLE>> ]
-import_classdiagram_ClassDiagramParser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ClassDiagramParser</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(inputString) : CDGraph<BR/></TD></TR></TABLE>> ]
+import_classdiagram_ClassDiagramParser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ClassDiagramParser</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(input : String) : CDGraph<BR/></TD></TR></TABLE>> ]
 }
 subgraph clusterparser { label = "parser"
-parser_ParserFascade__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ParserFascade&lt;T&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ parse(pParser&lt;T&gt;, inString) : T<BR/>+ parsers() : Map&lt;String, Parser&lt;T&gt;&gt;<BR/></TD></TR></TABLE>> ]
+parser_ParserFascade__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ParserFascade&lt;T&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ parse(p : Parser&lt;T&gt;, in : String) : T<BR/>+ parsers() : Map&lt;String, Parser&lt;T&gt;&gt;<BR/></TD></TR></TABLE>> ]
 parser_Parser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Parser</TD></TR></TABLE>> ]
 parser_Parsec [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Parsec</TD></TR></TABLE>> ]
 parser_text_parsec_language_LanguageDef [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">text.parsec.language.LanguageDef</TD></TR></TABLE>> ]
 parser_DiagramDef [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">DiagramDef</TD></TR></TABLE>> ]
 }
 subgraph clusterexport { label = "export"
-export_ExportModule__G__O__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, O&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ exprt(graphG) : O<BR/></TD></TR></TABLE>> ]
+export_ExportModule__G__O__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, O&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ exprt(graph : G) : O<BR/></TD></TR></TABLE>> ]
 }
 subgraph clusterexport_codegenerator { label = "export.codegenerator"
 export_codegenerator_ExportModule__G__String__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, String&gt;</TD></TR></TABLE>> ]
@@ -78,7 +78,7 @@ export_classdiagram_ExportModule__G__IOAction__ [ label = <<TABLE BORDER="0" CEL
 export_classdiagram_ProjektCodeGenerator__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ProjektCodeGenerator&lt;G&gt;</TD></TR></TABLE>> ]
 }
 subgraph clustermetric { label = "metric"
-metric_Metric__M__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Metric&lt;M, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ evaluate(graphG) : M<BR/></TD></TR></TABLE>> ]
+metric_Metric__M__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Metric&lt;M, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ evaluate(graph : G) : M<BR/></TD></TR></TABLE>> ]
 metric_GenericMetric__M__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GenericMetric&lt;M&gt;</TD></TR></TABLE>> ]
 metric_GenericMetric__int__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GenericMetric&lt;int&gt;</TD></TR></TABLE>> ]
 metric_MaxDegreeMetric [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">MaxDegreeMetric</TD></TR></TABLE>> ]
