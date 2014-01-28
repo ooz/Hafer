@@ -188,10 +188,6 @@ convertOptType t = case t of
 
 convertType :: Type -> String
 convertType t = escapeHTML $ format t
---convertType t = case t of
---    Type name               -> name
---    PolymorphicType t ts -> (convertType t) ++ "&lt;" ++ convertTypes ts ++ "&gt;"
---    _ -> ""
 
 convertTypes :: [Type] -> String
 convertTypes ts = case (map (\a -> convertType a) ts) of

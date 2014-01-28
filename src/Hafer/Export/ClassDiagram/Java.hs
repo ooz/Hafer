@@ -115,10 +115,6 @@ convertOptTypeMethod t = case t of
 
 convertType :: Type -> String
 convertType t = format t
---convertType t = case t of
---    Type name               -> name
---    PolymorphicType name ts -> name ++ "<" ++ convertTypes ts ++ ">"
---    _ -> ""
 
 convertTypes :: [Type] -> String
 convertTypes ts = case (map (\a -> convertType a) ts) of

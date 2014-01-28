@@ -154,13 +154,6 @@ optType = do mbType <- optionMaybe (do white $ expect ':';
 typ :: Parser Char Type
 typ = do n <- componentName $ Name ""
          return $ name2type n
---typ = try (do tBase   <- name;
---              expect  '<';
---              tParams <- sepEndBy typ comma;
---              white $ expect '>';
---              return $ PolymorphicType tBase tParams)
---  <|> do t <- name;
---         return $ Type t
 
 visibility :: Parser Char Visibility
 visibility = option VisDefault $
