@@ -38,3 +38,12 @@ escapeReserved :: String -> String
 escapeReserved word = case (elem word reservedWords) of
     True  -> "_" ++ word
     False -> word
+
+escapeHTML :: String -> String
+escapeHTML word = concat $ map escapeHTMLChar word
+
+escapeHTMLChar :: Char -> String
+escapeHTMLChar c = case c of
+    '<' -> "&lt;"
+    '>' -> "&gt;"
+    _   -> [c]

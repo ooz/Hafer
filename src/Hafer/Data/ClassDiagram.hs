@@ -70,7 +70,7 @@ type Param = (String, Type)
 
 -- Name and Type too similar
 data Name = Name String
-          | Parametrized String [String] 
+          | Parametrized String [Name] 
           | Qualified String Name
 --                    ^---------- Qualification/namespace
 --                           ^--- Name that is qualified
@@ -80,7 +80,7 @@ instance Format Name where
     format n = case n of
         Name ns -> ns
         Qualified qs n' -> qs ++ "." ++ format n'
-        Parametrized ns ps -> ns ++ "\\<" ++ (reduceSep ps ", ") ++ "\\>" -- TODO: maybe include parameters in formatted string
+        Parametrized ns ps -> ns ++ "\\<" ++ (reduceSep (map format ps) ", ") ++ "\\>" -- TODO: maybe include parameters in formatted string
 
 instance Ord Name where
     (<=) a b = isPrefix a b
@@ -157,9 +157,22 @@ unjoin q n = case (isPrefix q n) of
 
 data Type = Dynamic
           | Type            String
-          | QualifiedType   String Type
           | PolymorphicType String [Type]
+          | QualifiedType   String Type
     deriving (Show, Eq)
+
+instance Format Type where
+    format n = case n of
+        Type t -> t
+        QualifiedType q t' -> q ++ "." ++ format t'
+        PolymorphicType t ts -> t ++ "<" ++ (reduceSep (map format ts) ", ") ++ ">" -- TODO: maybe include parameters in formatted string
+
+-- | Converts a name to a type equivalent.
+name2type :: Name -> Type
+name2type name = case name of 
+    Name n -> Type n
+    Parametrized n params -> PolymorphicType n (map name2type params)
+    Qualified quali name' -> QualifiedType quali $ name2type name'
 
 data Visibility = VisDefault
                 | VisPrivate

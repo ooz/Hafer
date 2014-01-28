@@ -17,6 +17,7 @@ import Hafer.Export.Common.Dot ( cGRAPH_START
                                , escape
                                , escapeChar
                                , escapeReserved
+                               , escapeHTML
                                )
 -- import Hafer.Export.ExportMethod
 import Hafer.Data.ClassDiagram
@@ -186,10 +187,11 @@ convertOptType t = case t of
     _ -> " : " ++ convertType t
 
 convertType :: Type -> String
-convertType t = case t of
-    Type name               -> name
-    PolymorphicType name ts -> name ++ "&lt;" ++ convertTypes ts ++ "&gt;"
-    _ -> ""
+convertType t = escapeHTML $ format t
+--convertType t = case t of
+--    Type name               -> name
+--    PolymorphicType t ts -> (convertType t) ++ "&lt;" ++ convertTypes ts ++ "&gt;"
+--    _ -> ""
 
 convertTypes :: [Type] -> String
 convertTypes ts = case (map (\a -> convertType a) ts) of

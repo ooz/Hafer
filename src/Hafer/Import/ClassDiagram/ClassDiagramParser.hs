@@ -137,7 +137,7 @@ componentName quali = try (do quali' <- name;
                               return $ join quali $ Qualified quali' namePart)
                   <|> try (do n <- name;
                               expect '<';
-                              nParams <- sepEndBy name comma;
+                              nParams <- sepEndBy (componentName $ Name "") comma;
                               white $ expect '>';
                               return $ join quali $ Parametrized n nParams)
                   <|> do n <- name;
@@ -152,13 +152,15 @@ optType = do mbType <- optionMaybe (do white $ expect ':';
                 Just t  -> return t
 
 typ :: Parser Char Type
-typ = try (do tBase   <- name;
-              expect  '<';
-              tParams <- sepEndBy typ comma;
-              white $ expect '>';
-              return $ PolymorphicType tBase tParams)
-  <|> do t <- name;
-         return $ Type t
+typ = do n <- componentName $ Name ""
+         return $ name2type n
+--typ = try (do tBase   <- name;
+--              expect  '<';
+--              tParams <- sepEndBy typ comma;
+--              white $ expect '>';
+--              return $ PolymorphicType tBase tParams)
+--  <|> do t <- name;
+--         return $ Type t
 
 visibility :: Parser Char Visibility
 visibility = option VisDefault $
