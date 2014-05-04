@@ -7,18 +7,13 @@ It is heavily inspired by yuml.me
 
 # Example
 
-## Class Diagram
+[Hafer data model class diagram (source)](https://github.com/ooz/Hafer/blob/master/testdata/ex2.txt)
 
-[Hafer data model visualized using itself:](https://github.com/ooz/Hafer/blob/master/testdata/ex2.txt)
-![alt](https://raw.githubusercontent.com/ooz/Hafer/master/testdata/ex2-cladia.png)
+![Hafer data model visualized using itself](https://raw.githubusercontent.com/ooz/Hafer/master/testdata/ex2-cladia.png)
 
-## Graph derived Coupling metric
+[Graph derived Coupling metric](https://github.com/ooz/Hafer/blob/master/testdata/ex2-coupling.txt)
 
-[](https://github.com/ooz/Hafer/blob/master/testdata/ex2-coupling.txt)
-
-## Generated Java source
-
-[](https://github.com/ooz/Hafer/blob/master/testdata/ex2-java.txt)
+[Generated Java source](https://github.com/ooz/Hafer/blob/master/testdata/ex2-java.txt)
 
 # Dependencies
 
