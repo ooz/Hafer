@@ -8,7 +8,7 @@ It is heavily inspired by yuml.me
 # Example
 
 [Hafer data model visualized using itself:](https://github.com/ooz/Hafer/blob/master/testdata/ex2.txt)
-![alt](https://github.com/ooz/Hafer/blob/master/testdata/ex2-cladia.png)
+![alt](https://raw.githubusercontent.com/ooz/Hafer/master/testdata/ex2-cladia.png)
 
 
 
