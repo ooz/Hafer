@@ -24,3 +24,4 @@ It is heavily inspired by yuml.me
 # TODO
 
  * make cabal package ;)
+ * use Haskell graphviz bindings
