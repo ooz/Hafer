@@ -1,11 +1,11 @@
-# Hafer
+# Hafer is deprecated - use [mermaid](https://github.com/knsv/mermaid) instead to render diagrams
 
 Hafer is a text based diagram renderer (Graphviz backend) and code generator written in Haskell. 
 It is heavily inspired by yuml.me
 
 [Class Diagram syntax](https://github.com/ooz/Hafer/blob/master/doc/model.txt)
 
-# Example
+## Example
 
 [Hafer data model class diagram (source)](https://github.com/ooz/Hafer/blob/master/testdata/ex2.txt)
 
@@ -15,16 +15,12 @@ It is heavily inspired by yuml.me
 
 [Generated Java source](https://github.com/ooz/Hafer/blob/master/testdata/ex2-java.txt)
 
-# Dependencies
+## Dependencies
 
  * graphviz 2.26.x (older versions may work too)
 
-## cabal packages
+### cabal packages
 
  * parsec
  * missingh
 
-# TODO
-
- * make cabal package ;)
- * use Haskell graphviz bindings
