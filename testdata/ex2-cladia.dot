@@ -1,0 +1,177 @@
+digraph G {
+fontname = "Bitstream Vera Sans"; rankdir = "RL"; fontsize = 8;
+splines = "polyline";
+node [ fontname = "Bitstream Vera Sans" fontsize = 8 shape = "none" ]
+edge [ fontname = "Bitstream Vera Sans" fontsize = 8 labeldistance = 1.5 ]
+subgraph clusterdata_genericgraph { label = "data.genericgraph"
+data_genericgraph_Graph__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Graph&lt;V, E&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ elems() : List&lt;GraphElem&lt;V, E&gt;&gt;<BR/>+ vertices() : List&lt;Vertex&lt;V&gt;&gt;<BR/>+ edges() : List&lt;Edge&lt;E&gt;&gt;<BR/></TD></TR></TABLE>> ]
+data_genericgraph_GraphElem__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GraphElem&lt;V, E&gt;</TD></TR></TABLE>> ]
+data_genericgraph_Vertex__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Vertex&lt;T&gt;</TD></TR></TABLE>> ]
+data_genericgraph_Edge__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Edge&lt;V, E&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ get() : E<BR/>+ direction() : Direction<BR/>+ left() : Vertex&lt;V&gt;<BR/>+ right() : Vertex&lt;V&gt;<BR/></TD></TR></TABLE>> ]
+data_genericgraph_GVertex__V__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GVertex&lt;V&gt;</TD></TR></TABLE>> ]
+data_genericgraph_GEdge__V__E__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GEdge&lt;V, E&gt;</TD></TR></TABLE>> ]
+data_genericgraph_Vertex__V__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Vertex&lt;V&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ get() : V<BR/></TD></TR></TABLE>> ]
+data_genericgraph_Direction [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Direction</TD></TR></TABLE>> ]
+data_genericgraph_None [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">None</TD></TR></TABLE>> ]
+data_genericgraph_L2R [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">L2R</TD></TR></TABLE>> ]
+data_genericgraph_R2L [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">R2L</TD></TR></TABLE>> ]
+data_genericgraph_Both [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Both</TD></TR></TABLE>> ]
+}
+subgraph clusterdata_classdiagram { label = "data.classdiagram"
+data_classdiagram_Graph__CDNode__CDEdge__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Graph&lt;CDNode, CDEdge&gt;</TD></TR></TABLE>> ]
+data_classdiagram_CDGraph [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDGraph</TD></TR></TABLE>> ]
+data_classdiagram_GraphElem__CDNode__CDEdge__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GraphElem&lt;CDNode, CDEdge&gt;</TD></TR></TABLE>> ]
+data_classdiagram_CDElem [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDElem</TD></TR></TABLE>> ]
+data_classdiagram_CDNode [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDNode</TD></TR></TABLE>> ]
+data_classdiagram_Package [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Package</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Name<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Interface [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Interface</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Type<BR/>+ methods() : List&lt;Method&gt;<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Class [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Class</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ fields() : List&lt;Field&gt;<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Note [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Note</TD></TR></TABLE>> ]
+data_classdiagram_CDEdge [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CDEdge</TD></TR></TABLE>> ]
+data_classdiagram_Association [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Association</TD></TR></TABLE>> ]
+data_classdiagram_Aggregation [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Aggregation</TD></TR></TABLE>> ]
+data_classdiagram_Composition [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Composition</TD></TR></TABLE>> ]
+data_classdiagram_Inheritance [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Inheritance</TD></TR></TABLE>> ]
+data_classdiagram_Field [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Field</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ visibility() : Visibility<BR/>+ name() : Name<BR/>+ type() : Type<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Method [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Method</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ param() : List&lt;Param&gt;<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Visibility [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Visibility</TD></TR></TABLE>> ]
+data_classdiagram_VisDefault [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisDefault</TD></TR></TABLE>> ]
+data_classdiagram_VisPrivate [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisPrivate</TD></TR></TABLE>> ]
+data_classdiagram_VisPackage [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisPackage</TD></TR></TABLE>> ]
+data_classdiagram_VisPublic [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">VisPublic</TD></TR></TABLE>> ]
+data_classdiagram_Param [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Param</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Name<BR/>+ type() : Type<BR/></TD></TR></TABLE>> ]
+data_classdiagram_String [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">String</TD></TR></TABLE>> ]
+data_classdiagram_Name [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Name</TD></TR></TABLE>> ]
+data_classdiagram_Type [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Type</TD></TR></TABLE>> ]
+data_classdiagram_Simple [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Simple</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ name() : Name<BR/></TD></TR></TABLE>> ]
+data_classdiagram_Generic [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Generic</TD></TR></TABLE>> ]
+}
+subgraph clusterdata_erdiagram { label = "data.erdiagram"
+}
+subgraph clusterimport { label = "import"
+import_ImportModule__I__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;I, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(input : I) : G<BR/></TD></TR></TABLE>> ]
+}
+subgraph clusterimport_classdiagram { label = "import.classdiagram"
+import_classdiagram_ImportModule__String__CDGraph__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ImportModule&lt;String, CDGraph&gt;</TD></TR></TABLE>> ]
+import_classdiagram_ClassDiagramParser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ClassDiagramParser</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ imprt(input : String) : CDGraph<BR/></TD></TR></TABLE>> ]
+}
+subgraph clusterparser { label = "parser"
+parser_ParserFascade__T__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ParserFascade&lt;T&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ parse(p : Parser&lt;T&gt;, in : String) : T<BR/>+ parsers() : Map&lt;String, Parser&lt;T&gt;&gt;<BR/></TD></TR></TABLE>> ]
+parser_Parser [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Parser</TD></TR></TABLE>> ]
+parser_Parsec [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Parsec</TD></TR></TABLE>> ]
+parser_text_parsec_language_LanguageDef [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">text.parsec.language.LanguageDef</TD></TR></TABLE>> ]
+parser_DiagramDef [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">DiagramDef</TD></TR></TABLE>> ]
+}
+subgraph clusterexport { label = "export"
+export_ExportModule__G__O__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, O&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ exprt(graph : G) : O<BR/></TD></TR></TABLE>> ]
+}
+subgraph clusterexport_codegenerator { label = "export.codegenerator"
+export_codegenerator_ExportModule__G__String__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, String&gt;</TD></TR></TABLE>> ]
+export_codegenerator_SimpleCodeGenerator__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">SimpleCodeGenerator&lt;G&gt;</TD></TR></TABLE>> ]
+export_codegenerator_ExportModule__G__IOAction__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, IOAction&gt;</TD></TR></TABLE>> ]
+export_codegenerator_ProjektCodeGenerator__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ProjektCodeGenerator&lt;G&gt;</TD></TR></TABLE>> ]
+}
+subgraph clusterexport_classdiagram { label = "export.classdiagram"
+export_classdiagram_SimpleCodeGenerator__CDGraph__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">SimpleCodeGenerator&lt;CDGraph&gt;</TD></TR></TABLE>> ]
+export_classdiagram_ClassDiagramToDot [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ClassDiagramToDot</TD></TR></TABLE>> ]
+export_classdiagram_ExportModule__G__IOAction__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ExportModule&lt;G, IOAction&gt;</TD></TR></TABLE>> ]
+export_classdiagram_ProjektCodeGenerator__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">ProjektCodeGenerator&lt;G&gt;</TD></TR></TABLE>> ]
+}
+subgraph clustermetric { label = "metric"
+metric_Metric__M__G__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Metric&lt;M, G&gt;</TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ evaluate(graph : G) : M<BR/></TD></TR></TABLE>> ]
+metric_GenericMetric__M__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GenericMetric&lt;M&gt;</TD></TR></TABLE>> ]
+metric_GenericMetric__int__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">GenericMetric&lt;int&gt;</TD></TR></TABLE>> ]
+metric_MaxDegreeMetric [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">MaxDegreeMetric</TD></TR></TABLE>> ]
+metric_CycleMetric [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CycleMetric</TD></TR></TABLE>> ]
+}
+subgraph clustermetric_softwaredesign { label = "metric.softwaredesign"
+metric_softwaredesign_Metric__M__CDGraph__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">Metric&lt;M, CDGraph&gt;</TD></TR></TABLE>> ]
+metric_softwaredesign_SoftwareDesignMetric__M__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">SoftwareDesignMetric&lt;M&gt;</TD></TR></TABLE>> ]
+metric_softwaredesign_SoftwareDesignMetric__Float__ [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">SoftwareDesignMetric&lt;Float&gt;</TD></TR></TABLE>> ]
+metric_softwaredesign_CouplingMetric [ label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="p">CouplingMetric</TD></TR></TABLE>> ]
+}
+subgraph clusterdata_erdiagram { label = "data.erdiagram"
+}
+edge [ arrowhead = "vee" arrowtail = "diamond" dir=both taillabel = "" headlabel = "" label = "" ]
+data_genericgraph_Graph__V__E__:p -> data_genericgraph_GraphElem__V__E__:p
+edge [ arrowhead = "vee" arrowtail = "diamond" dir=both taillabel = "" headlabel = "" label = "" ]
+data_genericgraph_Graph__V__E__:p -> data_genericgraph_Vertex__T__:p
+edge [ arrowhead = "vee" arrowtail = "diamond" dir=both taillabel = "" headlabel = "" label = "" ]
+data_genericgraph_Graph__V__E__:p -> data_genericgraph_Edge__V__E__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_genericgraph_GVertex__V__:p -> data_genericgraph_GraphElem__V__E__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_genericgraph_GEdge__V__E__:p -> data_genericgraph_GraphElem__V__E__:p
+edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" taillabel = "" label = "" ]
+data_genericgraph_GVertex__V__:p -> data_genericgraph_Vertex__V__:p
+edge [ arrowhead = "vee" arrowtail = "odiamond" dir=both headlabel = "1" taillabel = "" label = "" ]
+data_genericgraph_GEdge__V__E__:p -> data_genericgraph_Edge__V__E__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_genericgraph_None:p -> data_genericgraph_Direction:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_genericgraph_L2R:p -> data_genericgraph_Direction:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_genericgraph_R2L:p -> data_genericgraph_Direction:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_genericgraph_Both:p -> data_genericgraph_Direction:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_CDGraph:p -> data_classdiagram_Graph__CDNode__CDEdge__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_CDElem:p -> data_classdiagram_GraphElem__CDNode__CDEdge__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Package:p -> data_classdiagram_CDNode:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Interface:p -> data_classdiagram_CDNode:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Class:p -> data_classdiagram_Interface:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Note:p -> data_classdiagram_CDNode:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Association:p -> data_classdiagram_CDEdge:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Aggregation:p -> data_classdiagram_CDEdge:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Composition:p -> data_classdiagram_CDEdge:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Inheritance:p -> data_classdiagram_CDEdge:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Method:p -> data_classdiagram_Field:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_VisDefault:p -> data_classdiagram_Visibility:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_VisPrivate:p -> data_classdiagram_Visibility:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_VisPackage:p -> data_classdiagram_Visibility:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_VisPublic:p -> data_classdiagram_Visibility:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Name:p -> data_classdiagram_String:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Simple:p -> data_classdiagram_Type:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+data_classdiagram_Generic:p -> data_classdiagram_Type:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+import_classdiagram_ClassDiagramParser:p -> import_classdiagram_ImportModule__String__CDGraph__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+parser_Parsec:p -> parser_Parser:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+parser_DiagramDef:p -> parser_text_parsec_language_LanguageDef:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+export_codegenerator_SimpleCodeGenerator__G__:p -> export_codegenerator_ExportModule__G__String__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+export_codegenerator_ProjektCodeGenerator__G__:p -> export_codegenerator_ExportModule__G__IOAction__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+export_classdiagram_ClassDiagramToDot:p -> export_classdiagram_SimpleCodeGenerator__CDGraph__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+export_classdiagram_ProjektCodeGenerator__G__:p -> export_classdiagram_ExportModule__G__IOAction__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+metric_GenericMetric__M__:p -> metric_Metric__M__G__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+metric_MaxDegreeMetric:p -> metric_GenericMetric__int__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+metric_CycleMetric:p -> metric_GenericMetric__int__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+metric_softwaredesign_SoftwareDesignMetric__M__:p -> metric_softwaredesign_Metric__M__CDGraph__:p
+edge [ arrowhead = "empty" arrowtail = "none" taillabel="" headlabel="" label="" ]
+metric_softwaredesign_CouplingMetric:p -> metric_softwaredesign_SoftwareDesignMetric__Float__:p
+}

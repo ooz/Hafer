@@ -1,0 +1,131 @@
+# Hafer model
+
+# Syntax description (brief/informal):
+#   Construct             | Notation
+#   ----------------------+--------------------------------------------------
+#   Comment (ignored)     | #
+#   Note    (rendered)    | {! Note }
+#   Package               | packagename:
+#   Class/Interface       | [Classname]
+#                         | [Classname| -field1:type1; +field2]
+#                         | [Classname| +method(p1:t1, p2:t2) : t3; +m():t]
+#       Visibility        | - (private), + (public), ~ (package)
+#                         | 
+#   Association           | -, -> (directed)
+#       Role              | RoleLeft------RoleRight
+#       Multiplicity      | 0..1---1..*>
+#   Aggregation           | <>->
+#   Composition           | ++->
+#   Inheritance           | ^-, ^-.- (dashed, e.g. for interfaces)
+#   Dependency (e.g. use) | <-.-
+
+
+
+data.genericgraph:
+[Graph<V, E> | +elems()   : List<GraphElem<V, E>>
+             ; +vertices(): List<Vertex<V>>
+             ; +edges()   : List<Edge<E>>]
+
+[GraphElem<V, E>]^--[GVertex<V>]
+[GraphElem<V, E>]^--[GEdge<V, E>]
+
+[Vertex<T>  | +get() : T]
+[Edge<V, E> | +get() : E
+            ; +direction(): Direction
+            ; +left() : Vertex<V>
+            ; +right(): Vertex<V>]
+
+[Direction]^--[None]
+[Direction]^--[L2R]
+[Direction]^--[R2L]
+[Direction]^--[Both]
+
+
+data.classdiagram:
+[Graph<CDNode, CDEdge>]^-----[CDGraph]
+[GraphElem<CDNode, CDEdge>]^-[CDElem]
+
+[CDNode]^-[Package | +name():Name]
+[CDNode]
+^---[Interface | +name():Type; +methods():List<Method>]
+    [Interface]
+    ^---[Class | +fields():List<Field>]
+[CDNode]^-[Note]
+
+# TODO: model associations!
+[CDEdge]^-[Association]
+[CDEdge]^-[Aggregation]
+[CDEdge]^-[Composition]
+[CDEdge]^-[Inheritance]
+
+[Field  | +visibility() : Visibility; +name() : Name; +type(): Type]
+[Field]^--[Method | +param() : List<Param>]
+
+[Visibility]^-[VisDefault]
+[Visibility]^-[VisPrivate]
+[Visibility]^-[VisPackage]
+[Visibility]^-[VisPublic]
+
+[Param | +name():Name; +type():Type]
+[String]^-[Name]
+[Type]^-[Simple  | +name() : Name]
+[Type]^-[Generic]
+
+
+data.erdiagram:
+# TODO: define ERDiagram vertices and edges!
+
+
+
+import:
+#[ImportFactory| +createModule(name : String) : ImportModule]
+[ImportModule<I, G>| +imprt(input : I) : G]
+
+
+import.classdiagram:
+[ImportModule<String, CDGraph>]
+^--[ClassDiagramParser | +imprt(input : String) : CDGraph]
+
+
+
+parser:
+[ParserFascade<T> | +parse(p:Parser<T>, in:String) : T
+                  ; +parsers():Map<String, Parser<T>>]
+[Parser]^--[Parsec]
+
+[text.parsec.language.LanguageDef]^-[DiagramDef]
+
+
+
+export:
+#[ExportFactory|+createModule(name : String) : ExportModule]
+[ExportModule<G, O>|+exprt(graph : G) : O]
+
+export.codegenerator:
+[ExportModule<G, String>]
+^--[SimpleCodeGenerator<G>]
+[ExportModule<G, IOAction>]
+^--[ProjektCodeGenerator<G>]
+
+export.classdiagram:
+[SimpleCodeGenerator<CDGraph>]
+^--[ClassDiagramToDot]
+[ExportModule<G, IOAction>]
+^--[ProjektCodeGenerator<G>]
+
+
+
+metric:
+[Metric<M, G> | +evaluate(graph : G) : M]
+[Metric<M, G>]^--[GenericMetric<M>]
+
+# Example generic metrics
+[GenericMetric<int>]
+^--[MaxDegreeMetric]
+[GenericMetric<int>]
+^--[CycleMetric]
+ 
+
+metric.softwaredesign:
+[Metric<M, CDGraph>]^-[SoftwareDesignMetric<M>]
+[SoftwareDesignMetric<Float>]^-[CouplingMetric]

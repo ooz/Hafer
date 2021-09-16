@@ -1,0 +1,19 @@
+[Graph]
+[Node]
+[Edge]
+
+
+[ImportFactory| +createModule(name : String) : ImportModule]
+[ImportModule| +import(input : String) : Graph]
+
+[ExportFactory|+createModule() : ExportModule]
+
+[ExportModule|+export(g : Graph) : String]
+
+[CodeGenerator]
+
+[Bar]
+[Bar|+foo]
+
+[Foo]^--[Bar]
+

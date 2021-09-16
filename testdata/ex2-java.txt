@@ -1,0 +1,554 @@
+data/genericgraph:
+package data.genericgraph;
+
+public class Graph<V, E> {
+
+
+    public List<GraphElem<V, E>> elems() {
+    }
+
+    public List<Vertex<V>> vertices() {
+    }
+
+    public List<Edge<E>> edges() {
+    }
+
+}
+
+package data.genericgraph;
+
+public class GraphElem<V, E> {
+
+
+}
+
+package data.genericgraph;
+
+public class Vertex<T> {
+
+
+}
+
+package data.genericgraph;
+
+public class Edge<V, E> {
+
+
+    public E get() {
+    }
+
+    public Direction direction() {
+    }
+
+    public Vertex<V> left() {
+    }
+
+    public Vertex<V> right() {
+    }
+
+}
+
+package data.genericgraph;
+
+public class GVertex<V> extends GraphElem<V, E> {
+
+
+}
+
+package data.genericgraph;
+
+public class GEdge<V, E> extends GraphElem<V, E> {
+
+
+}
+
+package data.genericgraph;
+
+public class Vertex<V> {
+
+
+    public V get() {
+    }
+
+}
+
+package data.genericgraph;
+
+public class Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class None extends Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class L2R extends Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class R2L extends Direction {
+
+
+}
+
+package data.genericgraph;
+
+public class Both extends Direction {
+
+
+}
+
+
+data/classdiagram:
+package data.classdiagram;
+
+public class Graph<CDNode, CDEdge> {
+
+
+}
+
+package data.classdiagram;
+
+public class CDGraph extends Graph<CDNode, CDEdge> {
+
+
+}
+
+package data.classdiagram;
+
+public class GraphElem<CDNode, CDEdge> {
+
+
+}
+
+package data.classdiagram;
+
+public class CDElem extends GraphElem<CDNode, CDEdge> {
+
+
+}
+
+package data.classdiagram;
+
+public class CDNode {
+
+
+}
+
+package data.classdiagram;
+
+public class Package extends CDNode {
+
+
+    public Name name() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class Interface extends CDNode {
+
+
+    public Type name() {
+    }
+
+    public List<Method> methods() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class Class extends Interface {
+
+
+    public List<Field> fields() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class Note extends CDNode {
+
+
+}
+
+package data.classdiagram;
+
+public class CDEdge {
+
+
+}
+
+package data.classdiagram;
+
+public class Association extends CDEdge {
+
+
+}
+
+package data.classdiagram;
+
+public class Aggregation extends CDEdge {
+
+
+}
+
+package data.classdiagram;
+
+public class Composition extends CDEdge {
+
+
+}
+
+package data.classdiagram;
+
+public class Inheritance extends CDEdge {
+
+
+}
+
+package data.classdiagram;
+
+public class Field {
+
+
+    public Visibility visibility() {
+    }
+
+    public Name name() {
+    }
+
+    public Type type() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class Method extends Field {
+
+
+    public List<Param> param() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class Visibility {
+
+
+}
+
+package data.classdiagram;
+
+public class VisDefault extends Visibility {
+
+
+}
+
+package data.classdiagram;
+
+public class VisPrivate extends Visibility {
+
+
+}
+
+package data.classdiagram;
+
+public class VisPackage extends Visibility {
+
+
+}
+
+package data.classdiagram;
+
+public class VisPublic extends Visibility {
+
+
+}
+
+package data.classdiagram;
+
+public class Param {
+
+
+    public Name name() {
+    }
+
+    public Type type() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class String {
+
+
+}
+
+package data.classdiagram;
+
+public class Name extends String {
+
+
+}
+
+package data.classdiagram;
+
+public class Type {
+
+
+}
+
+package data.classdiagram;
+
+public class Simple extends Type {
+
+
+    public Name name() {
+    }
+
+}
+
+package data.classdiagram;
+
+public class Generic extends Type {
+
+
+}
+
+
+data/erdiagram:
+
+import:
+package import;
+
+public class ImportModule<I, G> {
+
+
+    public G imprt(I input) {
+    }
+
+}
+
+
+import/classdiagram:
+package import.classdiagram;
+
+public class ImportModule<String, CDGraph> {
+
+
+}
+
+package import.classdiagram;
+
+public class ClassDiagramParser extends ImportModule<String, CDGraph> {
+
+
+    public CDGraph imprt(String input) {
+    }
+
+}
+
+
+parser:
+package parser;
+
+public class ParserFascade<T> {
+
+
+    public T parse(Parser<T> p, String in) {
+    }
+
+    public Map<String, Parser<T>> parsers() {
+    }
+
+}
+
+package parser;
+
+public class Parser {
+
+
+}
+
+package parser;
+
+public class Parsec extends Parser {
+
+
+}
+
+package parser;
+
+public class text.parsec.language.LanguageDef {
+
+
+}
+
+package parser;
+
+public class DiagramDef extends text.parsec.language.LanguageDef {
+
+
+}
+
+
+export:
+package export;
+
+public class ExportModule<G, O> {
+
+
+    public O exprt(G graph) {
+    }
+
+}
+
+
+export/codegenerator:
+package export.codegenerator;
+
+public class ExportModule<G, String> {
+
+
+}
+
+package export.codegenerator;
+
+public class SimpleCodeGenerator<G> extends ExportModule<G, String> {
+
+
+}
+
+package export.codegenerator;
+
+public class ExportModule<G, IOAction> {
+
+
+}
+
+package export.codegenerator;
+
+public class ProjektCodeGenerator<G> extends ExportModule<G, IOAction> {
+
+
+}
+
+
+export/classdiagram:
+package export.classdiagram;
+
+public class SimpleCodeGenerator<CDGraph> {
+
+
+}
+
+package export.classdiagram;
+
+public class ClassDiagramToDot extends SimpleCodeGenerator<CDGraph> {
+
+
+}
+
+package export.classdiagram;
+
+public class ExportModule<G, IOAction> {
+
+
+}
+
+package export.classdiagram;
+
+public class ProjektCodeGenerator<G> extends ExportModule<G, IOAction> {
+
+
+}
+
+
+metric:
+package metric;
+
+public class Metric<M, G> {
+
+
+    public M evaluate(G graph) {
+    }
+
+}
+
+package metric;
+
+public class GenericMetric<M> extends Metric<M, G> {
+
+
+}
+
+package metric;
+
+public class GenericMetric<int> {
+
+
+}
+
+package metric;
+
+public class MaxDegreeMetric extends GenericMetric<int> {
+
+
+}
+
+package metric;
+
+public class CycleMetric extends GenericMetric<int> {
+
+
+}
+
+
+metric/softwaredesign:
+package metric.softwaredesign;
+
+public class Metric<M, CDGraph> {
+
+
+}
+
+package metric.softwaredesign;
+
+public class SoftwareDesignMetric<M> extends Metric<M, CDGraph> {
+
+
+}
+
+package metric.softwaredesign;
+
+public class SoftwareDesignMetric<Float> {
+
+
+}
+
+package metric.softwaredesign;
+
+public class CouplingMetric extends SoftwareDesignMetric<Float> {
+
+
+}
+
+
+data/erdiagram:
+

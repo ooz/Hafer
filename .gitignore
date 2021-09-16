@@ -1,0 +1,9 @@
+# Executable
+Main
+
+# Build
+build/
+
+# Test data and output
+testdata/out/
+
